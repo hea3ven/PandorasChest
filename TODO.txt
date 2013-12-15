@@ -1,0 +1,60 @@
+
+/ (lo/hi) Respect the up axis
+- (me/hi) Load textures file names from the model
+- (lo/lo) Implement lines mesh primitive
+- (lo/lo) Implement linestrips mesh primitive
+- (lo/lo) Implement triangles mesh primitive
+- (lo/lo) Implement trifans mesh primitive
+- (lo/lo) Implement tristrips mesh primitive
+- (lo/lo) Implement matrix transform on animations
+- (hi/me) Implement BEZIER interpolation for animations
+- (hi/lo) Implement HERMITE interpolation for animations
+- (hi/lo) Implement BSPLINE interpolation for animations
+- (hi/lo) Implement skinning animations
+- (lo/lo) Implement recursive nodes on scenes
+- (me/hi) Implement matrix transform on scenes
+- (lo/hi) Use the normals provided from the model in the rendering
+
+
+No, this is not a request thread, I've actually been implementing a model loader for COLLADA files with support for animations, and wanted to show some of the progress and request some help from the community.
+
+First of all, what is collada and why use it? COLLADA is an exchange format for 3d assets, created by the Khronos group (the guys behind OpenGL). It is an XML-based format. The main file types I found while looking for something that supported animations are the quake engine format (MD3), which is a binary format, and several other propietary formats like 3DS from autodesk.
+
+Currently, the features I've implemented are:
+ * Loading meshes made up of triangles.
+ * Loading translation/rotation/scale of meshes in a scene.
+ * Loading of keyframe animations for the translation/rotation/scale with linear interpolation.
+ 
+I've recorded a sample of it at work: http://www.youtube.com/watch?v=6GtXvGPWwpg
+
+The features I'm looking into implementing before releasing a first version are:
+ * Load textures file names from the model
+ * Fully implement polylist and polygons mesh primitive (currently only works when all faces are triangles).
+ * Implement matrix transform on meshes in a scene and animations (an alternative to translation/rotation/scale).
+
+Finally, here are some of the features which I want to implement but are relatively complex and that will probably have to wait for a later version:
+ * Implement BEZIER and other interpolations for animations
+ * Implement skinning animations (i.e. animations with bones), this is actually the feature I was interested in and got me into doing this.
+
+What I need now is, first of all sample files. I obviously can test on Blender easily and I also have access to 3ds max, but don't have any of the rest of the 3d modelling softwares. So if you can, create a simple scene with a cube that has some kind of animation, and export it to a collada file.
+
+Second, there needs to be an api to call to render an animation's frame. My proposal that I've been working so far is adding the following methods to the IModelCustom
+
+[code]
+public interface IModelCustom {
+    String getType();
+
+    void renderAll();
+    void renderOnly(String... groupNames);
+    void renderPart(String partName);
+    void renderAllExcept(String... excludedGroupNames);
+	
+    int getAnimationLength();
+    void renderAnimationAll(int frame);
+    void renderAnimationOnly(int frame, String... groupNames);
+    void renderAnimationPart(int frame, String partName);
+    void renderAnimationAllExcept(int frame, String... excludedGroupNames);
+}[/code]
+
+where frame specifies which frame of the animation to render considering a framerate of 20 frames per second. This api allows simple code, for instance you can have a counter that gets added every tick. This is the way animations are handled in the minecraft code, for reference you can look in the chest tile entity class. Of course, model loaders which don't support animations would return 1 on getAnimationLength() and the "renderAnimation*" methods would call their respective "render*" methods.
+If anyone has different ideas of how this api could be defined, I'd be interested in seeing them.
