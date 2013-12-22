@@ -33,7 +33,6 @@ public class SceneNode {
 	}
 
 	public void render(Tessellator tessellator) {
-		tessellator.startDrawing(GL11.GL_TRIANGLES);
 		GL11.glPushMatrix();
 		
 		for (Transform trans : transforms) {
@@ -42,12 +41,10 @@ public class SceneNode {
 		
 		geometry.render(tessellator);
 		
-		tessellator.draw();
 		GL11.glPopMatrix();
 	}
 	
 	public void renderAnimation(Tessellator tessellator, int frame) {
-		tessellator.startDrawing(GL11.GL_TRIANGLES);
 		GL11.glPushMatrix();
 		
 		for (Transform trans : transforms) {
@@ -56,7 +53,6 @@ public class SceneNode {
 		
 		geometry.render(tessellator);
 		
-		tessellator.draw();
 		GL11.glPopMatrix();
 	}
 

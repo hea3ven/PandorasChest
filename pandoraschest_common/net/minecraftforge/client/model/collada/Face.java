@@ -1,5 +1,7 @@
 package net.minecraftforge.client.model.collada;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.model.obj.Vertex;
@@ -11,19 +13,14 @@ public class Face {
 	private Vec3[] vertexTexCoord;
 
 	public Face() {
-		vertex = new Vec3[3];
-		vertexNormals = new Vec3[3];
-		vertexTexCoord = new Vec3[3];
-	}
-
-	public void addVertex(int i, Vec3 position, Vec3 normal, Vec3 texcoord) {
-		vertex[i] = position;
-		vertexNormals[i] = normal;
-		vertexTexCoord[i] = texcoord;
-
+		vertex = null;
+		vertexNormals = null;
+		vertexTexCoord = null;
 	}
 
 	public void render(Tessellator tessellator) {
+
+		tessellator.startDrawing(GL11.GL_POLYGON);
 
 		Vec3 faceNormal = calculateFaceNormal();
 		tessellator.setNormal((float) -faceNormal.xCoord, (float) -faceNormal.yCoord, (float) -faceNormal.zCoord);
@@ -55,18 +52,37 @@ public class Face {
 			tessellator.addVertexWithUV(vertex[i].xCoord, vertex[i].yCoord, vertex[i].zCoord, vertexTexCoord[i].xCoord
 					+ offsetU, 1 - vertexTexCoord[i].yCoord - offsetV);
 		}
+
+		tessellator.draw();
 	}
 
 	private Vec3 calculateFaceNormal() {
-		Vec3 v1 = Vec3.createVectorHelper(vertex[1].xCoord - vertex[0].xCoord,
-				vertex[1].yCoord - vertex[0].yCoord,
-				vertex[1].zCoord - vertex[0].zCoord);
-		Vec3 v2 = Vec3.createVectorHelper(vertex[2].xCoord - vertex[0].xCoord,
-				vertex[2].yCoord - vertex[0].yCoord,
-				vertex[2].zCoord - vertex[0].zCoord);
-		Vec3 normalVector = null;
+		// Vec3 v1 = Vec3.createVectorHelper(vertex[1].xCoord -
+		// vertex[0].xCoord,
+		// vertex[1].yCoord - vertex[0].yCoord,
+		// vertex[1].zCoord - vertex[0].zCoord);
+		// Vec3 v2 = Vec3.createVectorHelper(vertex[2].xCoord -
+		// vertex[0].xCoord,
+		// vertex[2].yCoord - vertex[0].yCoord,
+		// vertex[2].zCoord - vertex[0].zCoord);
+		// Vec3 normalVector = null;
+		//
+		// return v1.crossProduct(v2).normalize();
+		double sumX = 0;
+		double sumY = 0;
+		double sumZ = 0;
+		for (int i = 0; i < vertexNormals.length; i++) {
+			sumX += vertexNormals[i].xCoord;
+			sumY += vertexNormals[i].yCoord;
+			sumZ += vertexNormals[i].zCoord;
+		}
+		return Vec3.createVectorHelper(sumX / vertexNormals.length, sumY / vertexNormals.length, sumZ
+				/ vertexNormals.length);
+	}
 
-		return v1.crossProduct(v2).normalize();
-
+	public void setVertex(Vec3[] vertex, Vec3[] normal, Vec3[] texCoords) {
+		this.vertex = vertex;
+		this.vertexNormals = normal;
+		this.vertexTexCoord = texCoords;
 	}
 }

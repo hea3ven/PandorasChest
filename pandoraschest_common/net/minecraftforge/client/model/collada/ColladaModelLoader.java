@@ -178,27 +178,85 @@ public class ColladaModelLoader implements IModelCustomLoader {
 						}
 					}
 
-					for (Element pElem : GetXPathElementList(child, "p")) {
-						List<Integer> refs = new LinkedList<>();
-						for (String val : splitData(pElem.getTextContent())) {
-							refs.add(Integer.parseInt(val));
-						}
+					if (child.getNodeName() == "triangles") {
+						int count = Integer.parseInt(child.getAttribute("count"));
+						int[] refs = splitDataInt(GetXPathElement(child, "p").getTextContent());
+						if (refs.length != (count * 9))
+							throw new ModelFormatException("Wrong number of data elements");
 
-						for (int p = 0; p < refs.size() / 9; p++) {
-							int k = p * 9;
+						int p = 0;
+						for (int q = 0; q < count; q++) {
+							Vec3[] vertex = new Vec3[3];
+							Vec3[] normal = new Vec3[3];
+							Vec3[] texCoords = new Vec3[3];
+							for (int r = 0; r < 3; r++) {
+								vertex[r] = asset.toMinecraftCoords(vertexSrc.getVec3(refs[q * 9 + r * 3],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								normal[r] = asset.toMinecraftCoords(normalSrc.getVec3(refs[q * 9 + r * 3 + 1],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								texCoords[r] = texcoordSrc.getVec2(refs[q * 9 + r * 3 + 2], "S", "T");
+								p++;
+							}
 							Face poly = new Face();
-							poly.addVertex(0,
-									asset.toMinecraftCoords(vertexSrc.getVec3(refs.get(k), "Z", "Y", "X")),
-									asset.toMinecraftCoords(normalSrc.getVec3(refs.get(k + 1), "Z", "Y", "X")),
-									texcoordSrc.getVec2(refs.get(k + 2), "S", "T"));
-							poly.addVertex(1,
-									asset.toMinecraftCoords(vertexSrc.getVec3(refs.get(k + 3), "Z", "Y", "X")),
-											asset.toMinecraftCoords(normalSrc.getVec3(refs.get(k + 4), "Z", "Y", "X")),
-									texcoordSrc.getVec2(refs.get(k + 5), "S", "T"));
-							poly.addVertex(2,
-									asset.toMinecraftCoords(vertexSrc.getVec3(refs.get(k + 6), "Z", "Y", "X")),
-											asset.toMinecraftCoords(normalSrc.getVec3(refs.get(k + 7), "Z", "Y", "X")),
-									texcoordSrc.getVec2(refs.get(k + 8), "S", "T"));
+							poly.setVertex(vertex, normal, texCoords);
+							mesh.addFace(poly);
+						}
+					} else if (child.getNodeName() == "polylist") {
+						int count = Integer.parseInt(child.getAttribute("count"));
+						int[] vcount = splitDataInt(GetXPathElement(child, "vcount").getTextContent());
+						int[] refs = splitDataInt(GetXPathElement(child, "p").getTextContent());
+						if (vcount.length != count)
+							throw new ModelFormatException("Wrong number of data elements");
+
+						int p = 0;
+						for (int q = 0; q < vcount.length; q++) {
+							Vec3[] vertex = new Vec3[vcount[q]];
+							Vec3[] normal = new Vec3[vcount[q]];
+							Vec3[] texCoords = new Vec3[vcount[q]];
+							for (int r = 0; r < vcount[q]; r++) {
+								vertex[r] = asset.toMinecraftCoords(vertexSrc.getVec3(refs[p * 3],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								normal[r] = asset.toMinecraftCoords(normalSrc.getVec3(refs[p * 3 + 1],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								texCoords[r] = texcoordSrc.getVec2(refs[p * 3 + 2], "S", "T");
+								p++;
+							}
+							Face poly = new Face();
+							poly.setVertex(vertex, normal, texCoords);
+							mesh.addFace(poly);
+						}
+					} else if (child.getNodeName() == "polygons") {
+						int count = Integer.parseInt(child.getAttribute("count"));
+						Collection<Element> polysData = GetXPathElementList(child, "p");
+						if (polysData.size() != count)
+							throw new ModelFormatException("Wrong number of data elements");
+
+						for (Element pElem : polysData) {
+							int[] refs = splitDataInt(pElem.getTextContent());
+							Vec3[] vertex = new Vec3[refs.length / 3];
+							Vec3[] normal = new Vec3[refs.length / 3];
+							Vec3[] texCoords = new Vec3[refs.length / 3];
+							for (int r = 0; r < refs.length / 3; r++) {
+								vertex[r] = asset.toMinecraftCoords(vertexSrc.getVec3(refs[r * 3],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								normal[r] = asset.toMinecraftCoords(normalSrc.getVec3(refs[r * 3 + 1],
+										asset.yAxis,
+										asset.xAxis,
+										asset.zAxis));
+								texCoords[r] = texcoordSrc.getVec2(refs[r * 3 + 2], "S", "T");
+							}
+							Face poly = new Face();
+							poly.setVertex(vertex, normal, texCoords);
 							mesh.addFace(poly);
 						}
 					}
@@ -323,8 +381,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 					String transformId = child.getAttribute("sid");
 					Transform trans = new Rotation(asset.toMinecraftCoords(Double.parseDouble(rotateData[0]),
 							Double.parseDouble(rotateData[1]),
-							Double.parseDouble(rotateData[2])),
-							Double.parseDouble(rotateData[3]));
+							Double.parseDouble(rotateData[2])), Double.parseDouble(rotateData[3]));
 					node.addTransform(trans);
 					asset.addTransform(sceneId + "/" + nodeId + "/" + transformId, trans);
 				} else if (child.getNodeName() == "scale") {
@@ -458,6 +515,15 @@ public class ColladaModelLoader implements IModelCustomLoader {
 
 	private String[] splitData(String data) {
 		return data.trim().split("\\s+");
+	}
+
+	private int[] splitDataInt(String data) {
+		String[] dataSplit = splitData(data);
+		int[] ret = new int[dataSplit.length];
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = Integer.parseInt(dataSplit[i]);
+		}
+		return ret;
 	}
 
 	private String parseURL(String url) {

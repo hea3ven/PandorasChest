@@ -11,6 +11,7 @@ public class TileEntityPandorasChestRenderer extends TileEntitySpecialRenderer {
 
 	public static ModelPandorasChest modelChest = new ModelPandorasChest("/assets/PandorasChest/models/chest2_blender.dae");
 	public static ModelPandorasChest modelChest2 = new ModelPandorasChest("/assets/PandorasChest/models/chest_open_bl.dae");
+//	public static ModelPandorasChest modelChest2 = new ModelPandorasChest("/assets/PandorasChest/models/chest_open_3ds_ad.DAE");
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
