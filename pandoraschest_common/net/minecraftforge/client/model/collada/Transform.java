@@ -11,5 +11,5 @@ public abstract class Transform {
 	public abstract void apply();
 	public abstract void applyAnimation(int frame);
 
-	public abstract void setAnimation(String paramName, Animation anim);
+	public abstract void addAnimation(String paramName, Animation anim);
 }

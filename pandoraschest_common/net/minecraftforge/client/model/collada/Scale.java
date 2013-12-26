@@ -27,7 +27,7 @@ public class Scale extends Transform {
 	}
 
 	@Override
-	public void setAnimation(String paramName, Animation anim) {
+	public void addAnimation(String paramName, Animation anim) {
 		if (paramName.equals("Z"))
 			animationsX.add(anim);
 		else if (paramName.equals("Y"))

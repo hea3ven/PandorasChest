@@ -1,18 +1,21 @@
 package net.minecraftforge.client.model.collada;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.client.model.IModelCustom;
 
 public class Model implements IModelCustom{
-	private Scene defaultScene;
+	
+	private Map<String, Geometry> geometries;
 	
 	public Model()
 	{
-		defaultScene = null;
+		geometries = new HashMap<String, Geometry>();
 	}
 
 	@Override
@@ -20,17 +23,17 @@ public class Model implements IModelCustom{
 		return "dae";
 	}
 
-	public void addScene(Scene scene) {
-	}
-
-	public void setDefaultScene(Scene scene) {
-		defaultScene = scene;
+	public void addGeometry(Geometry geom) {
+		geometries.put(geom.getName(), geom);
 	}
 
 	@Override
 	public void renderAll() {
 		Tessellator tessellator = Tessellator.instance;
-		defaultScene.render(tessellator);
+
+		for (Geometry geom : geometries.values()) {
+			geom.render(tessellator);
+		}
 	}
 
 	@Override
@@ -60,8 +63,9 @@ public class Model implements IModelCustom{
 
 	public void renderAnimationAll(int frame) {
 		Tessellator tessellator = Tessellator.instance;
-		defaultScene.renderAnimation(tessellator, frame);
-		// scenes.get("Scene").render(tessellator);
+		for (Geometry geom : geometries.values()) {
+			geom.renderAnimation(tessellator, frame);
+		}
 	}
 
 }

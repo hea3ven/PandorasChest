@@ -100,12 +100,8 @@ public class ColladaModelLoader implements IModelCustomLoader {
 		if (rootScene == null)
 			throw new ModelFormatException("No root scene");
 
-		Model model = new Model();
-
 		asset.assignAnimations(rootScene);
-		Scene scene = asset.GetScene(rootScene);
-		model.addScene(scene);
-		model.setDefaultScene(scene);
+		Model model = asset.GetModel(rootScene);
 		return model;
 	}
 
@@ -126,6 +122,9 @@ public class ColladaModelLoader implements IModelCustomLoader {
 		Geometry geom = new Geometry();
 
 		String id = LoadNodeId(geomElem);
+		geom.setName(geomElem.getAttribute("name"));
+		if(geom.getName().isEmpty())
+			geom.setName(id);
 
 		for (Element meshElem : GetXPathElementList(geomElem, "mesh")) {
 			LoadMesh(asset, geom, meshElem);
@@ -141,8 +140,6 @@ public class ColladaModelLoader implements IModelCustomLoader {
 	}
 
 	private void LoadMesh(ColladaAsset asset, Geometry geom, Element meshNode) {
-
-		ColladaMesh mesh = new ColladaMesh();
 
 		HashMap<String, ColladaSource> sources = new HashMap<>();
 
@@ -203,7 +200,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 							}
 							Face poly = new Face();
 							poly.setVertex(vertex, normal, texCoords);
-							mesh.addFace(poly);
+							geom.addFace(poly);
 						}
 					} else if (child.getNodeName() == "polylist") {
 						int count = Integer.parseInt(child.getAttribute("count"));
@@ -231,7 +228,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 							}
 							Face poly = new Face();
 							poly.setVertex(vertex, normal, texCoords);
-							mesh.addFace(poly);
+							geom.addFace(poly);
 						}
 					} else if (child.getNodeName() == "polygons") {
 						int count = Integer.parseInt(child.getAttribute("count"));
@@ -257,13 +254,12 @@ public class ColladaModelLoader implements IModelCustomLoader {
 							}
 							Face poly = new Face();
 							poly.setVertex(vertex, normal, texCoords);
-							mesh.addFace(poly);
+							geom.addFace(poly);
 						}
 					}
 				}
 			}
 		}
-		geom.setMesh(mesh);
 	}
 
 	private ColladaSource LoadSource(Element sourceNode) {
@@ -341,22 +337,22 @@ public class ColladaModelLoader implements IModelCustomLoader {
 	}
 
 	private void LoadVisualScene(ColladaAsset asset, Element visualSceneNode) {
-		Scene scene = new Scene();
+		Model model = new Model();
 
 		String sceneId = LoadNodeId(visualSceneNode);
 
 		for (Element nodeElem : GetXPathElementList(visualSceneNode, "node")) {
-			LoadNode(asset, sceneId, scene, nodeElem);
+			LoadNode(asset, sceneId, model, nodeElem);
 		}
-		asset.addScene(sceneId, scene);
+		asset.addScene(sceneId, model);
 	}
 
-	private void LoadNode(ColladaAsset asset, String sceneId, Scene scene, Element nodeNode) {
-		SceneNode node = new SceneNode();
-
+	private void LoadNode(ColladaAsset asset, String sceneId, Model scene, Element nodeNode) {
 		String nodeId = nodeNode.getAttribute("id");
 
 		HashMap<String, ColladaSource> sources = new HashMap<>();
+		List<Transform> transforms = new LinkedList<>();
+		Geometry geom = null;
 
 		NodeList children = nodeNode.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
@@ -371,7 +367,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 					Transform trans = new Translation(asset.toMinecraftCoords(Double.parseDouble(transData[0]),
 							Double.parseDouble(transData[1]),
 							Double.parseDouble(transData[2])));
-					node.addTransform(trans);
+					transforms.add(trans);
 					asset.addTransform(sceneId + "/" + nodeId + "/" + transformId, trans);
 				} else if (child.getNodeName() == "rotate") {
 					String[] rotateData = splitData(child.getTextContent());
@@ -382,7 +378,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 					Transform trans = new Rotation(asset.toMinecraftCoords(Double.parseDouble(rotateData[0]),
 							Double.parseDouble(rotateData[1]),
 							Double.parseDouble(rotateData[2])), Double.parseDouble(rotateData[3]));
-					node.addTransform(trans);
+					transforms.add(trans);
 					asset.addTransform(sceneId + "/" + nodeId + "/" + transformId, trans);
 				} else if (child.getNodeName() == "scale") {
 					String[] scaleData = splitData(child.getTextContent());
@@ -393,7 +389,7 @@ public class ColladaModelLoader implements IModelCustomLoader {
 					Transform trans = new Scale(asset.toMinecraftCoords(Double.parseDouble(scaleData[0]),
 							Double.parseDouble(scaleData[1]),
 							Double.parseDouble(scaleData[2])));
-					node.addTransform(trans);
+					transforms.add(trans);
 					asset.addTransform(sceneId + "/" + nodeId + "/" + transformId, trans);
 				} else if (child.getNodeName() == "matrix") {
 					// String[] matrixData = splitData(child.getTextContent());
@@ -416,12 +412,16 @@ public class ColladaModelLoader implements IModelCustomLoader {
 					// matrix));
 				} else if (child.getNodeName() == "instance_geometry") {
 					String url = parseURL(child.getAttribute("url"));
-					node.setGeometry(asset.getGeometry(url));
+					geom = asset.getGeometry(url);
 				}
 			}
 		}
-		if (node.getGeometry() != null)
-			scene.addNode(node);
+		if (geom != null) {
+			for (Transform transform : transforms) {
+				geom.addTransform(transform);
+			}
+			scene.addGeometry(geom);
+		}
 	}
 
 	private void LoadAnimations(ColladaAsset asset, Element animationsNode) {

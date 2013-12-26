@@ -37,7 +37,7 @@ public class Rotation extends Transform {
 	}
 
 	@Override
-	public void setAnimation(String paramName, Animation anim) {
+	public void addAnimation(String paramName, Animation anim) {
 		if (paramName.equals("ANGLE"))
 			animations.add(anim);
 	}

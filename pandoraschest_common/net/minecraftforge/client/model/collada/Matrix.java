@@ -31,7 +31,7 @@ public class Matrix extends Transform {
 	}
 
 	@Override
-	public void setAnimation(String paramName, Animation anim) {
+	public void addAnimation(String paramName, Animation anim) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -41,7 +41,7 @@ import scala.reflect.internal.Mirrors.Roots;
 public class ColladaAsset {
 
 	private Map<String, Geometry> geometries;
-	private Map<String, Scene> scenes;
+	private Map<String, Model> models;
 	private Map<String, Transform> transforms;
 	private List<Tuple> animations;
 	private String rootScene;
@@ -51,7 +51,7 @@ public class ColladaAsset {
 
 	public ColladaAsset() {
 		geometries = new HashMap<>();
-		scenes = new HashMap<>();
+		models = new HashMap<>();
 		transforms = new HashMap<>();
 		animations = new LinkedList<>();
 		rootScene = null;
@@ -86,8 +86,8 @@ public class ColladaAsset {
 		return geometries.get(url);
 	}
 
-	public void addScene(String id, Scene scene) {
-		scenes.put(id, scene);
+	public void addScene(String id, Model scene) {
+		models.put(id, scene);
 	}
 
 	private int GetAxisIndex(String axis) {
@@ -118,8 +118,8 @@ public class ColladaAsset {
 		transforms.put(url, trans);
 	}
 
-	public Scene GetScene(String sceneId) {
-		Scene scene = scenes.get(sceneId);
+	public Model GetModel(String sceneId) {
+		Model scene = models.get(sceneId);
 
 		return scene;
 	}
@@ -138,7 +138,7 @@ public class ColladaAsset {
 				paramName = "Y";
 			else if (paramName.equals(zAxis))
 				paramName = "Z";
-			transforms.get(sceneId + "/" + geomName).setAnimation(paramName, anim);
+			transforms.get(sceneId + "/" + geomName).addAnimation(paramName, anim);
 		}
 	}
 

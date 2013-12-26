@@ -25,7 +25,7 @@ public class Translation extends Transform {
 	}
 
 	@Override
-	public void setAnimation(String paramName, Animation anim) {
+	public void addAnimation(String paramName, Animation anim) {
 		if (paramName.equals("X"))
 			animationsX.add(anim);
 		else if (paramName.equals("Y"))
