@@ -1,6 +1,8 @@
 package hea3ven.pandoraschest.client.model;
 
+import hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 import hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.client.model.collada.ColladaAsset;
@@ -16,7 +18,8 @@ public class ModelPandorasChest {
 	public ModelPandorasChest(String file_name) {
 		// modelChest =
 		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_3ds_ad.dae");
-		modelChest = AdvancedModelLoader.loadModel(file_name);
+		modelChest = AdvancedModelLoader.loadModel(new ResourceLocation(
+				"pandoraschest:models/" + file_name));
 		this.file_name = file_name;
 		// modelChest =
 		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_bl.dae");
@@ -32,14 +35,16 @@ public class ModelPandorasChest {
 	}
 
 	public void reloadModel() {
-		modelChest = AdvancedModelLoader.loadModel(file_name);
+		modelChest = AdvancedModelLoader.loadModel(new ResourceLocation(
+				"pandoraschest:models/" + file_name));
 	}
 
 	public void setFrame(int frame) {
 		this.frame = frame;
 	}
 
-	public void render(TileEntityPandorasChest chest, double x, double y, double z) {
+	public void render(TileEntityDecorativeChest chest, double x, double y,
+			double z) {
 		// Push a blank matrix onto the stack
 		GL11.glPushMatrix();
 
