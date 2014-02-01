@@ -1,18 +1,12 @@
-package hea3ven.pandoraschest.tileentity;
-
-import hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
+package com.hea3ven.pandoraschest.tileentity;
 
 import java.util.Random;
-import java.util.logging.Level;
+
+import net.minecraft.item.ItemStack;
+
+import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
 
 import cpw.mods.fml.common.FMLLog;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 

@@ -1,24 +1,14 @@
-package hea3ven.pandoraschest.block;
+package com.hea3ven.pandoraschest.block;
 
 import java.util.Random;
 
-import hea3ven.pandoraschest.PandorasChestMod;
-import hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
+
+import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
 public class BlockPandorasChest extends BlockDecorativeChest {
 

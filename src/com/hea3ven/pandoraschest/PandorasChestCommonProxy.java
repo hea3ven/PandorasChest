@@ -1,4 +1,4 @@
-package hea3ven.pandoraschest;
+package com.hea3ven.pandoraschest;
 
 public class PandorasChestCommonProxy {
 

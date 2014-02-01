@@ -1,14 +1,14 @@
-package hea3ven.pandoraschest;
+package com.hea3ven.pandoraschest;
+
+import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
 
-import hea3ven.pandoraschest.block.BlockDecorativeChest;
-import hea3ven.pandoraschest.block.BlockPandorasChest;
-import hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
-import hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
+import com.hea3ven.pandoraschest.block.BlockDecorativeChest;
+import com.hea3ven.pandoraschest.block.BlockPandorasChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
-import net.minecraftforge.client.model.collada.ColladaModelLoader;
-import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -25,7 +25,7 @@ public class PandorasChestMod {
 	@Instance("pandoraschest")
 	public static PandorasChestMod instance;
 
-	@SidedProxy(clientSide = "hea3ven.pandoraschest.client.PandorasChestClientProxy", serverSide = "hea3ven.pandoraschest.PandorasChestCommonProxy")
+	@SidedProxy(clientSide = "com.hea3ven.pandoraschest.client.PandorasChestClientProxy", serverSide = "com.hea3ven.pandoraschest.PandorasChestCommonProxy")
 	public static PandorasChestCommonProxy proxy;
 
 	private BlockDecorativeChest decorativeChest;
@@ -33,8 +33,6 @@ public class PandorasChestMod {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		ColladaModelLoader.init();
-
 		decorativeChest = new BlockDecorativeChest();
 		PandorasChest = new BlockPandorasChest();
 

@@ -1,14 +1,13 @@
-package hea3ven.pandoraschest.client.model;
+package com.hea3ven.pandoraschest.client.model;
 
-import hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
-import hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-import net.minecraftforge.client.model.collada.ColladaAsset;
-import net.minecraftforge.client.model.collada.Model;
 
 import org.lwjgl.opengl.GL11;
+
+import com.hea3ven.colladamodel.client.model.collada.Model;
+import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
 public class ModelPandorasChest {
 	private IModelCustom modelChest;
@@ -64,6 +63,7 @@ public class ModelPandorasChest {
 		// ((ColladaAsset) this.modelChest).renderAnimationAll(0);
 		((Model) this.modelChest).renderAnimationAll(chest.getAnimationFrame());
 		// ((ColladaAsset) this.modelChest).renderAll();
+		// this.modelChest.renderAll();
 
 		// Pop this matrix from the stack.
 		GL11.glPopMatrix();

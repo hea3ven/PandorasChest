@@ -1,13 +1,13 @@
-package hea3ven.pandoraschest.tileentity;
+package com.hea3ven.pandoraschest.tileentity;
 
-import cpw.mods.fml.common.FMLLog;
-import hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+
+import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
 
 public class TileEntityDecorativeChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;

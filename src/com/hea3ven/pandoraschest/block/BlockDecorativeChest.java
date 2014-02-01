@@ -1,8 +1,4 @@
-package hea3ven.pandoraschest.block;
-
-import hea3ven.pandoraschest.PandorasChestMod;
-import hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
-import hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
+package com.hea3ven.pandoraschest.block;
 
 import java.util.Random;
 
@@ -19,6 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
 public class BlockDecorativeChest extends BlockContainer {
 
@@ -45,9 +44,8 @@ public class BlockDecorativeChest extends BlockContainer {
 		if (par6ItemStack.hasDisplayName()) {
 			// ((TileEntityPandorasChest) par1World.getBlockTileEntity(par2,
 			// par3, par4)).setChestGuiName(par6ItemStack.getDisplayName());
-			((TileEntityDecorativeChest) par1World
-					.func_147438_o(par2, par3, par4))
-					.setChestGuiName(par6ItemStack.getDisplayName());
+			((TileEntityDecorativeChest) par1World.func_147438_o(par2, par3,
+					par4)).setChestGuiName(par6ItemStack.getDisplayName());
 		}
 	}
 
