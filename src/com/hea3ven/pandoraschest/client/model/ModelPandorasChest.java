@@ -6,12 +6,11 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
-import com.hea3ven.colladamodel.client.model.collada.Model;
+import com.hea3ven.colladamodel.client.model.collada.IModelAnimationCustom;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
 public class ModelPandorasChest {
 	private IModelCustom modelChest;
-	private int frame;
 	private String file_name;
 
 	public ModelPandorasChest(String file_name) {
@@ -26,7 +25,6 @@ public class ModelPandorasChest {
 		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_3ds_oc.DAE");
 		// modelChest =
 		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest.obj");
-		frame = 0;
 	}
 
 	public void render() {
@@ -36,10 +34,6 @@ public class ModelPandorasChest {
 	public void reloadModel() {
 		modelChest = AdvancedModelLoader.loadModel(new ResourceLocation(
 				"pandoraschest:models/" + file_name));
-	}
-
-	public void setFrame(int frame) {
-		this.frame = frame;
 	}
 
 	public void render(TileEntityDecorativeChest chest, double x, double y,
@@ -61,11 +55,21 @@ public class ModelPandorasChest {
 
 		// Render the object, using modelTutBox.renderAll();
 		// ((ColladaAsset) this.modelChest).renderAnimationAll(0);
-		((Model) this.modelChest).renderAnimationAll(chest.getAnimationFrame());
+		((IModelAnimationCustom) this.modelChest).renderAnimationAll(chest
+				.getAnimationFrame());
 		// ((ColladaAsset) this.modelChest).renderAll();
 		// this.modelChest.renderAll();
 
 		// Pop this matrix from the stack.
+		GL11.glPopMatrix();
+	}
+
+	public void renderItem() {
+		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glTranslatef(0.0f, -0.5f, 0.0f);
+		this.modelChest.renderAll();
+		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 }

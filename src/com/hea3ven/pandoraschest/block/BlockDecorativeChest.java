@@ -158,7 +158,7 @@ public class BlockDecorativeChest extends BlockContainer {
 
 	@Override
 	public int func_149645_b() {
-		return -1;
+		return PandorasChestMod.pandorasChestRenderId;
 	}
 
 	@Override

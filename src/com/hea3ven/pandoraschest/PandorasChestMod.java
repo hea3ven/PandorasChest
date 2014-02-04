@@ -28,6 +28,8 @@ public class PandorasChestMod {
 	@SidedProxy(clientSide = "com.hea3ven.pandoraschest.client.PandorasChestClientProxy", serverSide = "com.hea3ven.pandoraschest.PandorasChestCommonProxy")
 	public static PandorasChestCommonProxy proxy;
 
+	public static int pandorasChestRenderId;
+
 	private BlockDecorativeChest decorativeChest;
 	private BlockPandorasChest PandorasChest;
 

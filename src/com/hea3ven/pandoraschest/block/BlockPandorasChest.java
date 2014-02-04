@@ -1,7 +1,5 @@
 package com.hea3ven.pandoraschest.block;
 
-import java.util.Random;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -11,8 +9,6 @@ import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
 public class BlockPandorasChest extends BlockDecorativeChest {
-
-	private final Random random = new Random();
 
 	public BlockPandorasChest() {
 		super();
