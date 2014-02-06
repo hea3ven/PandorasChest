@@ -1,0 +1,16 @@
+[
+{
+  "modid": "pandoraschest",
+  "name": "Pandora's Chest",
+  "description": "Random decorative stuff.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Hea3veN"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

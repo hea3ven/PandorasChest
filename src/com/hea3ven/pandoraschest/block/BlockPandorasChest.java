@@ -12,27 +12,23 @@ public class BlockPandorasChest extends BlockDecorativeChest {
 
 	public BlockPandorasChest() {
 		super();
-		this.func_149647_a(CreativeTabs.tabDecorations);
-		this.func_149663_c("block.pandorasChest"); // Unlocalized Name
-		// this.func_149658_d("examplemod:testBlock"); // Texture Name
+		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setBlockName("block.pandorasChest");
 	}
 
 	@Override
-	public TileEntity func_149915_a(World world, int metadata) {
+	public TileEntity createNewTileEntity(World world, int metadata) {
 		TileEntityPandorasChest tileEntity = new TileEntityPandorasChest();
 		return tileEntity;
 	}
 
 	@Override
-	// public boolean onBlockActivated(World world, int x, int y, int z,
-	// EntityPlayer player, int par6, float par7, float par8, float par9) {
-	public boolean func_149727_a(World world, int x, int y, int z,
+	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int par6, float par7, float par8, float par9) {
 		if (world.isRemote) {
 			return true;
 		} else {
-			// TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-			TileEntity tileEntity = world.func_147438_o(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
 			if (tileEntity == null || player.isSneaking()) {
 				return false;
 			}

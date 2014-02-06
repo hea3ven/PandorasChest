@@ -13,7 +13,7 @@ public class ContainerPandorasChest extends Container {
 	public ContainerPandorasChest(IInventory playerInventory,
 			IInventory chestInventory) {
 		this.chestInventory = chestInventory;
-		chestInventory.openChest();
+		chestInventory.openInventory();
 		int i = (3 - 4) * 18;
 		int j;
 		int k;
@@ -46,7 +46,7 @@ public class ContainerPandorasChest extends Container {
 
 	public void onContainerClosed(EntityPlayer par1EntityPlayer) {
 		super.onContainerClosed(par1EntityPlayer);
-		this.chestInventory.closeChest();
+		this.chestInventory.closeInventory();
 	}
 
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {

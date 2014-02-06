@@ -24,7 +24,7 @@ group = "com.hea3ven" // http://maven.apache.org/guides/mini/guide-naming-conven
 archivesBaseName = "pandoraschest"
 
 minecraft {
-    version = "1.7.2-10.12.0.1022"
+    version = "1.7.2-10.12.0.1024"
 }
 
 sourceSets.main{

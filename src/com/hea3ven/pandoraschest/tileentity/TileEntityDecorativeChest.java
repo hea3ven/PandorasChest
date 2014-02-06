@@ -52,7 +52,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 			if (itemStack.stackSize <= amount) {
 				setStackInSlot(slot, null);
-				this.onInventoryChanged();
+				this.markDirty();
 				return itemStack;
 			} else {
 				ItemStack returnItemStack = itemStack.splitStack(amount);
@@ -60,7 +60,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 				if (itemStack.stackSize == 0)
 					setStackInSlot(slot, null);
 
-				this.onInventoryChanged();
+				this.markDirty();
 				return returnItemStack;
 			}
 		} else {
@@ -88,19 +88,19 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			itemStack.stackSize = this.getInventoryStackLimit();
 		}
 
-		this.onInventoryChanged();
+		this.markDirty();
 	}
 
 	@Override
 	// public String getInvName() {
-	public String func_145825_b() {
-		return this.func_145818_k_() ? this.customName
+	public String getInventoryName() {
+		return this.hasCustomInventoryName() ? this.customName
 				: "container.pandoraschest";
 	}
 
 	@Override
 	// public boolean isInvNameLocalized() {
-	public boolean func_145818_k_() {
+	public boolean hasCustomInventoryName() {
 		return this.customName != null && this.customName.length() > 0;
 	}
 
@@ -115,69 +115,41 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		// return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord,
-		// this.zCoord) != this ? false : entityplayer.getDistanceSq(
-		// (double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D,
-		// (double) this.zCoord + 0.5D) <= 64.0D;
-		return this.field_145850_b.func_147438_o(this.field_145851_c,
-				this.field_145848_d, this.field_145849_e) != this ? false
-				: entityplayer.getDistanceSq(
-						(double) this.field_145851_c + 0.5D,
-						(double) this.field_145848_d + 0.5D,
-						(double) this.field_145849_e + 0.5D) <= 64.0D;
+		return this.worldObj.getTileEntity(this.xCoord, this.yCoord,
+				this.zCoord) != this ? false : entityplayer.getDistanceSq(
+				(double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D,
+				(double) this.zCoord + 0.5D) <= 64.0D;
 	}
 
 	@Override
-	public void openChest() {
-		// if (!this.worldObj.isRemote) {
-		if (!this.field_145850_b.isRemote) {
+	public void openInventory() {
+		if (!this.worldObj.isRemote) {
 			if (this.numUsingPlayers < 0)
 				this.numUsingPlayers = 0;
 
 			TileEntityPandorasChestRenderer.modelChest.reloadModel();
 
 			++this.numUsingPlayers;
-			// this.worldObj.addBlockEvent(this.xCoord, this.yCoord,
-			// this.zCoord,
-			// this.getBlockType().blockID, 1, this.numUsingPlayers);
-			this.field_145850_b.func_147452_c(this.field_145851_c,
-					this.field_145848_d, this.field_145849_e,
-					this.func_145838_q(), 1, this.numUsingPlayers);
-			// this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-			// this.yCoord, this.zCoord, this.getBlockType().blockID);
-			this.field_145850_b.func_147459_d(this.field_145851_c,
-					this.field_145848_d, this.field_145849_e,
-					this.func_145838_q());
-			// this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-			// this.yCoord - 1, this.zCoord, this.getBlockType().blockID);
-			this.field_145850_b.func_147459_d(this.field_145851_c,
-					this.field_145848_d - 1, this.field_145849_e,
-					this.func_145838_q());
+			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
+					this.getBlockType(), 1, this.numUsingPlayers);
+			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
+					this.yCoord, this.zCoord, this.getBlockType());
+			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
+					this.yCoord - 1, this.zCoord, this.getBlockType());
 		}
 	}
 
 	@Override
-	public void closeChest() {
-		// if (!this.worldObj.isRemote) {
-		if (!this.field_145850_b.isRemote) {
+	public void closeInventory() {
+		if (!this.worldObj.isRemote) {
 			--this.numUsingPlayers;
 
-			// this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-			// this.yCoord, this.zCoord, this.getBlockType().blockID);
-			this.field_145850_b.func_147459_d(this.field_145851_c,
-					this.field_145848_d, this.field_145849_e,
-					this.func_145838_q());
-			// this.worldObj.addBlockEvent(this.xCoord, this.yCoord,
-			// this.zCoord, this.getBlockType().blockID, 1,
-			// this.numUsingPlayers);
-			this.field_145850_b.func_147452_c(this.field_145851_c,
-					this.field_145848_d, this.field_145849_e,
-					this.func_145838_q(), 1, this.numUsingPlayers);
-			// this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-			// this.yCoord - 1, this.zCoord, this.getBlockType().blockID);
-			this.field_145850_b.func_147459_d(this.field_145851_c,
-					this.field_145848_d - 1, this.field_145849_e,
-					this.func_145838_q());
+			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
+					this.yCoord, this.zCoord, this.getBlockType());
+			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
+					this.getBlockType(), 1, this.numUsingPlayers);
+			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
+					this.yCoord - 1, this.zCoord, this.getBlockType());
 		}
 	}
 
@@ -187,34 +159,26 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	}
 
 	@Override
-	// public boolean receiveClientEvent(int par1, int par2) {
-	public boolean func_145842_c(int par1, int par2) {
+	public boolean receiveClientEvent(int par1, int par2) {
 		if (par1 == 1) {
 			this.numUsingPlayers = par2;
 			return true;
 		} else {
-			// return super.receiveClientEvent(par1, par2);
-			return super.func_145842_c(par1, par2);
+			return super.receiveClientEvent(par1, par2);
 		}
 	}
 
 	@Override
-	// public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
-	public void func_145839_a(NBTTagCompound par1NBTTagCompound) {
-		// super.readFromNBT(par1NBTTagCompound);
-		super.func_145839_a(par1NBTTagCompound);
-		// NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
-		NBTTagList nbttaglist = par1NBTTagCompound.func_150295_c("Items", 10);
+	public void readFromNBT(NBTTagCompound par1NBTTagCompound) {
+		super.readFromNBT(par1NBTTagCompound);
+		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
 
 		if (par1NBTTagCompound.hasKey("CustomName")) {
 			this.customName = par1NBTTagCompound.getString("CustomName");
 		}
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-			// NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist
-			// .tagAt(i);
-			NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist
-					.func_150305_b(i);
+			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
 			int j = nbttagcompound1.getByte("Slot") & 255;
 
 			if (j >= 0 && j < this.chestContents.length) {
@@ -225,10 +189,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	}
 
 	@Override
-	// public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
-	public void func_145841_b(NBTTagCompound par1NBTTagCompound) {
-		// super.writeToNBT(par1NBTTagCompound);
-		super.func_145841_b(par1NBTTagCompound);
+	public void writeToNBT(NBTTagCompound par1NBTTagCompound) {
+		super.writeToNBT(par1NBTTagCompound);
 		NBTTagList nbttaglist = new NBTTagList();
 
 		for (int i = 0; i < this.chestContents.length; ++i) {
@@ -242,15 +204,13 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 		par1NBTTagCompound.setTag("Items", nbttaglist);
 
-		// if (this.isInvNameLocalized()) {
-		if (this.func_145818_k_()) {
+		if (this.hasCustomInventoryName()) {
 			par1NBTTagCompound.setString("CustomName", this.customName);
 		}
 	}
 
 	@Override
-	// public void updateEntity() {
-	public void func_145845_h() {
+	public void updateEntity() {
 		animationFrame++;
 		animationFrame++;
 		if (animationFrame > 40)

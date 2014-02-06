@@ -24,40 +24,31 @@ public class BlockDecorativeChest extends BlockContainer {
 	private final Random random = new Random();
 
 	public BlockDecorativeChest() {
-		super(Material.field_151576_e);
-		this.func_149647_a(CreativeTabs.tabDecorations);
-		this.func_149663_c("block.decorativeChest"); // Unlocalized Name
-		// this.func_149658_d("examplemod:testBlock"); // Texture Name
+		super(Material.rock);
+		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setBlockName("block.decorativeChest");
 	}
 
 	@Override
-	public TileEntity func_149915_a(World world, int metadata) {
+	public TileEntity createNewTileEntity(World world, int metadata) {
 		TileEntityDecorativeChest tileEntity = new TileEntityDecorativeChest();
 		return tileEntity;
 	}
 
 	@Override
-	// public void onBlockPlacedBy(World par1World, int par2, int par3, int
-	// par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
-	public void func_149689_a(World par1World, int par2, int par3, int par4,
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 			EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
 		if (par6ItemStack.hasDisplayName()) {
-			// ((TileEntityPandorasChest) par1World.getBlockTileEntity(par2,
-			// par3, par4)).setChestGuiName(par6ItemStack.getDisplayName());
-			((TileEntityDecorativeChest) par1World.func_147438_o(par2, par3,
+			((TileEntityDecorativeChest) par1World.getTileEntity(par2, par3,
 					par4)).setChestGuiName(par6ItemStack.getDisplayName());
 		}
 	}
 
 	@Override
-	// public void breakBlock(World par1World, int par2, int par3, int par4,
-	// int par5, int par6) {
-	public void func_149749_a(World par1World, int par2, int par3, int par4,
+	public void breakBlock(World par1World, int par2, int par3, int par4,
 			Block par5, int par6) {
-		// TileEntityPandorasChest tileentitychest = (TileEntityPandorasChest)
-		// par1World.getBlockTileEntity(par2, par3, par4);
 		TileEntityDecorativeChest tileentitychest = (TileEntityDecorativeChest) par1World
-				.func_147438_o(par2, par3, par4);
+				.getTileEntity(par2, par3, par4);
 
 		if (tileentitychest != null) {
 			for (int j1 = 0; j1 < tileentitychest.getSizeInventory(); ++j1) {
@@ -99,24 +90,19 @@ public class BlockDecorativeChest extends BlockContainer {
 					}
 				}
 			}
-
-			// par1World.func_96440_m(par2, par3, par4, par5);
 			par1World.func_147453_f(par2, par3, par4, par5);
 		}
 
-		super.func_149749_a(par1World, par2, par3, par4, par5, par6);
+		super.breakBlock(par1World, par2, par3, par4, par5, par6);
 	}
 
 	@Override
-	// public boolean onBlockActivated(World world, int x, int y, int z,
-	// EntityPlayer player, int par6, float par7, float par8, float par9) {
-	public boolean func_149727_a(World world, int x, int y, int z,
+	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int par6, float par7, float par8, float par9) {
 		if (world.isRemote) {
 			return true;
 		} else {
-			// TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-			TileEntity tileEntity = world.func_147438_o(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
 			if (tileEntity == null || player.isSneaking()) {
 				return false;
 			}
@@ -127,8 +113,7 @@ public class BlockDecorativeChest extends BlockContainer {
 	}
 
 	public IInventory getInventory(World par1World, int par2, int par3, int par4) {
-		// return (IInventory) par1World.getBlockTileEntity(par2, par3, par4);
-		return (IInventory) par1World.func_147438_o(par2, par3, par4);
+		return (IInventory) par1World.getTileEntity(par2, par3, par4);
 	}
 
 	public boolean hasComparatorInputOverride() {
@@ -152,17 +137,17 @@ public class BlockDecorativeChest extends BlockContainer {
 	}
 
 	@Override
-	public boolean func_149686_d() {
+	public boolean isOpaqueCube() {
 		return false;
 	}
 
 	@Override
-	public int func_149645_b() {
+	public int getRenderType() {
 		return PandorasChestMod.pandorasChestRenderId;
 	}
 
 	@Override
-	public boolean func_149662_c() {
+	public boolean renderAsNormalBlock() {
 		return false;
 	}
 }

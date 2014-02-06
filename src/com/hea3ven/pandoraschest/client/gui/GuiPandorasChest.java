@@ -25,52 +25,31 @@ public class GuiPandorasChest extends GuiContainer {
 	}
 
 	@Override
-	// protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-	protected void func_146979_b(int par1, int par2) {
-		// this.fontRenderer.drawString(
-		// this.chestInventory.isInvNameLocalized() ? this.chestInventory
-		// .getInvName() : I18n.getString(this.chestInventory
-		// .getInvName()), 8, 6, 4210752);
-		this.field_146289_q.drawString(
-				this.chestInventory.func_145818_k_() ? this.chestInventory
-						.func_145825_b() : I18n.getStringParams(
-						this.chestInventory.func_145825_b(), new Object[0]), 8,
-				6, 4210752);
-		// // this.fontRenderer.drawString(
-		// // ((Integer)this.chestInventory.selectedChest).toString(), 140, 6,
-		// 4210752);
-		// this.field_146289_q.drawString(
-		// ((Integer)this.chestInventory.selectedChest).toString(), 140, 6,
-		// 4210752);
-		// this.fontRenderer
-		// .drawString(
-		// this.playerInventory.isInvNameLocalized() ? this.playerInventory
-		// .getInvName() : I18n
-		// .getString(this.playerInventory.getInvName()),
-		// 8, this.ySize - 96 + 2, 4210752);
-		this.field_146289_q.drawString(
-				this.playerInventory.func_145818_k_() ? this.playerInventory
-						.func_145825_b() : I18n.getStringParams(
-						this.playerInventory.func_145825_b(), new Object[0]),
-				8, this.field_147000_g - 96 + 2, 4210752);
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		this.fontRendererObj
+				.drawString(
+						this.chestInventory.hasCustomInventoryName() ? this.chestInventory
+								.getInventoryName() : I18n.format(
+								this.chestInventory.getInventoryName(),
+								new Object[0]), 8, 6, 4210752);
+		// this.fontRenderer.drawString(((Integer)this.chestInventory.selectedChest).toString(),
+		// 140, 6, 4210752);
+		this.fontRendererObj
+				.drawString(
+						this.playerInventory.hasCustomInventoryName() ? this.playerInventory
+								.getInventoryName() : I18n.format(
+								this.playerInventory.getInventoryName(),
+								new Object[0]), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	@Override
-	// protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-	protected void func_146976_a(float f, int i, int j) {
+	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		// this.mc.getTextureManager().bindTexture(field_110421_t);
-		this.field_146297_k.getTextureManager().bindTexture(field_110421_t);
-		// int k = (this.width - this.xSize) / 2;
-		int k = (this.field_146294_l - this.field_146999_f) / 2;
-		// int l = (this.height - this.ySize) / 2;
-		int l = (this.field_146295_m - this.field_147000_g) / 2;
-		// this.drawTexturedModalRect(k, l, 0, 0, this.xSize, 3 * 18 + 17);
-		this.drawTexturedModalRect(k, l, 0, 0, this.field_146999_f, 3 * 18 + 17);
-		// this.drawTexturedModalRect(k, l + 3 * 18 + 17, 0, 126, this.xSize,
-		// 96);
-		this.drawTexturedModalRect(k, l + 3 * 18 + 17, 0, 126,
-				this.field_146999_f, 96);
+		this.mc.getTextureManager().bindTexture(field_110421_t);
+		int k = (this.width - this.xSize) / 2;
+		int l = (this.height - this.ySize) / 2;
+		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, 3 * 18 + 17);
+		this.drawTexturedModalRect(k, l + 3 * 18 + 17, 0, 126, this.xSize, 96);
 	}
 
 }
