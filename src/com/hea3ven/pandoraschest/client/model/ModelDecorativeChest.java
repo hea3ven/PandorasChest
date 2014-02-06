@@ -9,22 +9,14 @@ import org.lwjgl.opengl.GL11;
 import com.hea3ven.colladamodel.client.model.collada.IModelAnimationCustom;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
-public class ModelPandorasChest {
+public class ModelDecorativeChest {
 	private IModelCustom modelChest;
 	private String file_name;
 
-	public ModelPandorasChest(String file_name) {
-		// modelChest =
-		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_3ds_ad.dae");
+	public ModelDecorativeChest(String file_name) {
 		modelChest = AdvancedModelLoader.loadModel(new ResourceLocation(
 				"pandoraschest:models/" + file_name));
 		this.file_name = file_name;
-		// modelChest =
-		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_bl.dae");
-		// modelChest =
-		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest_open_3ds_oc.DAE");
-		// modelChest =
-		// AdvancedModelLoader.loadModel("/assets/PandorasChest/models/chest.obj");
 	}
 
 	public void render() {
@@ -38,29 +30,15 @@ public class ModelPandorasChest {
 
 	public void render(TileEntityDecorativeChest chest, double x, double y,
 			double z) {
-		// Push a blank matrix onto the stack
 		GL11.glPushMatrix();
 
-		// Move the object into the correct position on the block (because the
-		// OBJ's origin is the center of the object)
 		GL11.glTranslatef((float) x + 0.5f, (float) y, (float) z + 0.5f);
+		GL11.glRotatef(chest.getRotation() * -90.0f + 90.f, 0.0f, 1.0f, 0.0f);
 
-		// Scale our object to about half-size in all directions (the OBJ file
-		// is a little large)
-		// GL11.glScalef(0.5f, 0.5f, 0.5f);
-
-		// Bind the texture, so that OpenGL properly textures our block.
-		// FMLClientHandler.instance().getClient().renderEngine.bindTexture(new
-		// ResourceLocation("PandorasChest", "/models/chest.png"));
-
-		// Render the object, using modelTutBox.renderAll();
-		// ((ColladaAsset) this.modelChest).renderAnimationAll(0);
 		((IModelAnimationCustom) this.modelChest).renderAnimationAll(chest
 				.getAnimationFrame());
-		// ((ColladaAsset) this.modelChest).renderAll();
 		// this.modelChest.renderAll();
 
-		// Pop this matrix from the stack.
 		GL11.glPopMatrix();
 	}
 

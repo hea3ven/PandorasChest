@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import com.hea3ven.pandoraschest.PandorasChestCommonProxy;
 import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.client.gui.GuiPandorasChest;
-import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
+import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityDecorativeChestRenderer;
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
@@ -27,7 +27,7 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 
 	@Override
 	public void registerRenderers() {
-		TileEntityPandorasChestRenderer renderer = new TileEntityPandorasChestRenderer();
+		TileEntityDecorativeChestRenderer renderer = new TileEntityDecorativeChestRenderer();
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityPandorasChest.class, renderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(

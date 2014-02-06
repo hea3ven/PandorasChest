@@ -5,9 +5,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityPandorasChestRenderer;
+import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityDecorativeChestRenderer;
 
 public class TileEntityDecorativeChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;
@@ -18,6 +21,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	private int animationFrame;
 
+	private int rotation;
+
 	public TileEntityDecorativeChest() {
 		this(27);
 	}
@@ -27,6 +32,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 		numUsingPlayers = 0;
 		animationFrame = 0;
 		customName = null;
+		rotation = 2;
 	}
 
 	@Override
@@ -127,7 +133,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (this.numUsingPlayers < 0)
 				this.numUsingPlayers = 0;
 
-			TileEntityPandorasChestRenderer.modelChest.reloadModel();
+			TileEntityDecorativeChestRenderer.modelChest.reloadModel();
 
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
@@ -177,6 +183,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			this.customName = par1NBTTagCompound.getString("CustomName");
 		}
 
+		this.rotation = par1NBTTagCompound.getInteger("Rotation");
+
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
 			int j = nbttagcompound1.getByte("Slot") & 255;
@@ -207,6 +215,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 		if (this.hasCustomInventoryName()) {
 			par1NBTTagCompound.setString("CustomName", this.customName);
 		}
+
+		par1NBTTagCompound.setInteger("Rotation", this.rotation);
 	}
 
 	@Override
@@ -219,6 +229,28 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	public int getAnimationFrame() {
 		return animationFrame;
+	}
+
+	public void setRotation(int rotation) {
+		this.rotation = rotation;
+	}
+
+	public int getRotation() {
+		return rotation;
+	}
+	
+	@Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound nbttagcompound = new NBTTagCompound();
+        this.writeToNBT(nbttagcompound);
+        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, nbttagcompound);
+    }
+
+ 	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+ 		this.readFromNBT(pkt.func_148857_g());
+		super.onDataPacket(net, pkt);
 	}
 
 }

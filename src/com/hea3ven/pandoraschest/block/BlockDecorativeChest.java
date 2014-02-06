@@ -14,6 +14,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
@@ -37,10 +38,16 @@ public class BlockDecorativeChest extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack) {
+			EntityLivingBase player, ItemStack par6ItemStack) {
+		TileEntityDecorativeChest te = (TileEntityDecorativeChest) par1World
+				.getTileEntity(par2, par3, par4);
+
+		int l = MathHelper
+				.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		te.setRotation(l);
+
 		if (par6ItemStack.hasDisplayName()) {
-			((TileEntityDecorativeChest) par1World.getTileEntity(par2, par3,
-					par4)).setChestGuiName(par6ItemStack.getDisplayName());
+			(te).setChestGuiName(par6ItemStack.getDisplayName());
 		}
 	}
 

@@ -8,23 +8,24 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
-import com.hea3ven.pandoraschest.client.model.ModelPandorasChest;
+import com.hea3ven.pandoraschest.client.model.ModelDecorativeChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class TileEntityPandorasChestRenderer extends TileEntitySpecialRenderer
-		implements ISimpleBlockRenderingHandler {
+public class TileEntityDecorativeChestRenderer extends
+		TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
-	public static ModelPandorasChest modelChest = new ModelPandorasChest(
+	public static ModelDecorativeChest modelChest = new ModelDecorativeChest(
 			"chest2_blender.dae");
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y,
 			double z, float f) {
-		TileEntityDecorativeChest tileEntityPandorasChest = (TileEntityDecorativeChest) tileEntity;
+		TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
 		bindTexture(new ResourceLocation("pandoraschest", "models/chest.png"));
-		modelChest.render(tileEntityPandorasChest, x, y, z);
+
+		modelChest.render(te, x, y, z);
 	}
 
 	// private void bindTexture(ResourceLocation resourceLocation)
