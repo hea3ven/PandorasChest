@@ -1,5 +1,7 @@
 package com.hea3ven.pandoraschest.client.model;
 
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -9,14 +11,13 @@ import org.lwjgl.opengl.GL11;
 import com.hea3ven.colladamodel.client.model.collada.IModelAnimationCustom;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
-public class ModelDecorativeChest {
+public class ModelDecorativeChest implements IResourceManagerReloadListener {
 	private IModelCustom modelChest;
 	private String file_name;
 
 	public ModelDecorativeChest(String file_name) {
-		modelChest = AdvancedModelLoader.loadModel(new ResourceLocation(
-				"pandoraschest:models/" + file_name));
 		this.file_name = file_name;
+		reloadModel();
 	}
 
 	public void render() {
@@ -49,5 +50,10 @@ public class ModelDecorativeChest {
 		this.modelChest.renderAll();
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	public void onResourceManagerReload(IResourceManager var1) {
+		reloadModel();
 	}
 }
