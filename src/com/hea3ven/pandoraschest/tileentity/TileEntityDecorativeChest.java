@@ -223,12 +223,12 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public void updateEntity() {
 		animationFrame++;
 		animationFrame++;
-		if (animationFrame > 40)
+		if (animationFrame > 100)
 			animationFrame = 0;
 	}
 
 	public int getAnimationFrame() {
-		return animationFrame;
+		return animationFrame / 5;
 	}
 
 	public void setRotation(int rotation) {

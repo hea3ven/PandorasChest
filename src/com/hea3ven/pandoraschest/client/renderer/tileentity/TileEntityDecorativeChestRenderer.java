@@ -1,10 +1,8 @@
 package com.hea3ven.pandoraschest.client.renderer.tileentity;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
@@ -22,9 +20,6 @@ public class TileEntityDecorativeChestRenderer extends
 			"chest2_blender.dae");
 
 	public TileEntityDecorativeChestRenderer() {
-		// TODO: Fix this hack by implementing a global Model Resource Manager
-		((IReloadableResourceManager) Minecraft.getMinecraft()
-				.getResourceManager()).registerReloadListener(modelChest);
 	}
 
 	@Override

@@ -7,9 +7,13 @@ import net.minecraft.world.World;
 import com.hea3ven.pandoraschest.PandorasChestCommonProxy;
 import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.client.gui.GuiPandorasChest;
+import com.hea3ven.pandoraschest.client.renderer.FluorecentSpotRenderer;
+import com.hea3ven.pandoraschest.client.renderer.FluorecentTubeRenderer;
 import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityDecorativeChestRenderer;
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
+import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -28,6 +32,9 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 	@Override
 	public void registerRenderers() {
 		TileEntityDecorativeChestRenderer renderer = new TileEntityDecorativeChestRenderer();
+		FluorecentSpotRenderer fluorecentRenderer = new FluorecentSpotRenderer();
+		FluorecentTubeRenderer fluorecentTubeRenderer = new FluorecentTubeRenderer();
+		
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityPandorasChest.class, renderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(
@@ -36,6 +43,14 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 				.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(
 				PandorasChestMod.pandorasChestRenderId, renderer);
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluorecentBlock.class, fluorecentRenderer);
+		PandorasChestMod.fluorecentSpotRenderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(PandorasChestMod.fluorecentSpotRenderId, fluorecentRenderer);
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFluorecentTubeBlock.class, fluorecentTubeRenderer);
+		PandorasChestMod.fluorecentTubeRenderId = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(PandorasChestMod.fluorecentTubeRenderId, fluorecentTubeRenderer);
 	}
 
 	@Override

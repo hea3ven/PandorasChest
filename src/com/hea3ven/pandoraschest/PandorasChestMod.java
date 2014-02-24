@@ -5,8 +5,13 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 
 import com.hea3ven.pandoraschest.block.BlockDecorativeChest;
+import com.hea3ven.pandoraschest.block.BlockFluorecentSpot;
+import com.hea3ven.pandoraschest.block.BlockFluorecentTube;
 import com.hea3ven.pandoraschest.block.BlockPandorasChest;
+import com.hea3ven.pandoraschest.item.ItemFluorecentTube;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
+import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
 import cpw.mods.fml.common.FMLLog;
@@ -29,14 +34,20 @@ public class PandorasChestMod {
 	public static PandorasChestCommonProxy proxy;
 
 	public static int pandorasChestRenderId;
+	public static int fluorecentSpotRenderId;
+	public static int fluorecentTubeRenderId;
 
-	private BlockDecorativeChest decorativeChest;
-	private BlockPandorasChest PandorasChest;
+	public static BlockDecorativeChest decorativeChest;
+	public static BlockPandorasChest PandorasChest;
+	public static BlockFluorecentSpot fluorecentSpot;
+	public static BlockFluorecentTube fluorecentTube;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		decorativeChest = new BlockDecorativeChest();
 		PandorasChest = new BlockPandorasChest();
+		fluorecentSpot = new BlockFluorecentSpot();
+		fluorecentTube = new BlockFluorecentTube();
 
 		GameRegistry.registerBlock(decorativeChest, "Decorative Chest");
 		GameRegistry.registerBlock(PandorasChest, "Pandora's Chest");
@@ -44,6 +55,12 @@ public class PandorasChestMod {
 				"tileentity.decorativechest");
 		GameRegistry.registerTileEntity(TileEntityPandorasChest.class,
 				"tileentity.pandoraschest");
+		GameRegistry.registerBlock(fluorecentSpot, "Fluorecent Spot");
+		GameRegistry.registerBlock(fluorecentTube, ItemFluorecentTube.class, "Fluorecent Tube");
+		GameRegistry.registerTileEntity(TileEntityFluorecentBlock.class,
+				"tileentity.fluorecentspot");
+		GameRegistry.registerTileEntity(TileEntityFluorecentTubeBlock.class,
+				"tileentity.fluorecenttube");
 
 		Configuration cfg = new Configuration(
 				event.getSuggestedConfigurationFile());
