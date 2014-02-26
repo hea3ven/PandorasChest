@@ -17,7 +17,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	public int numUsingPlayers;
 
-	private int animationFrame;
+	private double openAnimationFrame;
+	private double closeAnimationFrame;
 
 	private int rotation;
 
@@ -28,7 +29,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public TileEntityDecorativeChest(int slotsNum) {
 		chestContents = new ItemStack[slotsNum];
 		numUsingPlayers = 0;
-		animationFrame = 0;
+		openAnimationFrame = 0.0d;
+		closeAnimationFrame = -1.0d;
 		customName = null;
 		rotation = 2;
 	}
@@ -163,6 +165,14 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	@Override
 	public boolean receiveClientEvent(int par1, int par2) {
 		if (par1 == 1) {
+			if (this.numUsingPlayers == 0 && par2 > 0) {
+				this.openAnimationFrame = 0.05d;
+				this.closeAnimationFrame = -1.0d;
+			}
+			if (this.numUsingPlayers > 0 && par2 <= 0) {
+				this.openAnimationFrame = -1.0d;
+				this.closeAnimationFrame = 0.05d;
+			}
 			this.numUsingPlayers = par2;
 			return true;
 		} else {
@@ -217,13 +227,30 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	@Override
 	public void updateEntity() {
-		animationFrame++;
-		if (animationFrame > 100)
-			animationFrame = 0;
+		if (this.worldObj.isRemote) {
+			if (openAnimationFrame > 0) {
+				openAnimationFrame += 0.05d;
+			} else {
+				if (closeAnimationFrame > 0)
+					closeAnimationFrame += 0.05d;
+			}
+		}
 	}
 
-	public int getAnimationFrame() {
-		return animationFrame;
+	public double getOpenAnimationFrame() {
+		return openAnimationFrame;
+	}
+
+	public void setOpenAnimationFrame(double frame) {
+		openAnimationFrame = frame;
+	}
+
+	public double getCloseAnimationFrame() {
+		return closeAnimationFrame;
+	}
+
+	public void setCloseAnimationFrame(double frame) {
+		closeAnimationFrame = frame;
 	}
 
 	public void setRotation(int rotation) {
@@ -233,18 +260,18 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public int getRotation() {
 		return rotation;
 	}
-	
-	@Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        this.writeToNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 3, nbttagcompound);
-    }
 
- 	@Override
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		this.writeToNBT(nbttagcompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord,
+				this.zCoord, 3, nbttagcompound);
+	}
+
+	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
- 		this.readFromNBT(pkt.func_148857_g());
+		this.readFromNBT(pkt.func_148857_g());
 		super.onDataPacket(net, pkt);
 	}
 
