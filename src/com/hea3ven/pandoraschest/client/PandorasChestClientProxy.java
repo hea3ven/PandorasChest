@@ -32,9 +32,9 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 	@Override
 	public void registerRenderers() {
 		DecorativeChestRenderer decorativeChestRenderer = new DecorativeChestRenderer(
-				"pandoraschest:models/chest2_blender.dae",
-				"pandoraschest:models/chest2_blender.dae",
-				"pandoraschest:models/chest.png");
+				"pandoraschest:models/decorative_chest_open.dae",
+				"pandoraschest:models/decorative_chest_close.dae",
+				"pandoraschest:models/decorative_chest.png");
 		DecorativeChestRenderer pandorasChestRenderer = new DecorativeChestRenderer(
 				"pandoraschest:models/pandoras_chest_open.dae",
 				"pandoraschest:models/pandoras_chest_close.dae",
