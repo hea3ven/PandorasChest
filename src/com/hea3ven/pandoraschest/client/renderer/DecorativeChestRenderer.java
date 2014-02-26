@@ -1,4 +1,4 @@
-package com.hea3ven.pandoraschest.client.renderer.tileentity;
+package com.hea3ven.pandoraschest.client.renderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -13,34 +13,24 @@ import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class TileEntityDecorativeChestRenderer extends
-		TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
+public class DecorativeChestRenderer extends TileEntitySpecialRenderer
+		implements ISimpleBlockRenderingHandler {
 
-	public static ModelDecorativeChest modelChest = new ModelDecorativeChest(
-			"chest2_blender.dae");
+	private ModelDecorativeChest model;
+	private ResourceLocation textureResource;
 
-	public TileEntityDecorativeChestRenderer() {
+	public DecorativeChestRenderer(String openAnimationResourceName,
+			String closeAnimationResourceName, String textureResourceName) {
+		model = new ModelDecorativeChest(openAnimationResourceName,
+				closeAnimationResourceName);
+		textureResource = new ResourceLocation(textureResourceName);
 	}
-
-	@Override
-	public void renderTileEntityAt(TileEntity tileEntity, double x, double y,
-			double z, float f) {
-		TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
-		bindTexture(new ResourceLocation("pandoraschest", "models/chest.png"));
-
-		modelChest.render(te, x, y, z);
-	}
-
-	// private void bindTexture(ResourceLocation resourceLocation)
-	// {
-	// FMLClientHandler.instance().getClient().renderEngine.bindTexture(resourceLocation);
-	// }
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId,
 			RenderBlocks renderer) {
-		bindTexture(new ResourceLocation("pandoraschest", "models/chest.png"));
-		modelChest.renderItem();
+		bindTexture(textureResource);
+		model.renderItem();
 	}
 
 	@Override
@@ -57,6 +47,15 @@ public class TileEntityDecorativeChestRenderer extends
 	@Override
 	public int getRenderId() {
 		return PandorasChestMod.pandorasChestRenderId;
+	}
+
+	@Override
+	public void renderTileEntityAt(TileEntity tileEntity, double x, double y,
+			double z, float f) {
+		TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
+		bindTexture(textureResource);
+
+		model.render(te, x, y, z);
 	}
 
 }

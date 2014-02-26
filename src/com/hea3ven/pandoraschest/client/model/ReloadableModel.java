@@ -1,6 +1,7 @@
 package com.hea3ven.pandoraschest.client.model;
 
-import com.hea3ven.colladamodel.client.model.collada.IModelAnimationCustom;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
@@ -8,36 +9,31 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
+
+import com.hea3ven.colladamodel.client.model.collada.IModelAnimationCustom;
 
 public class ReloadableModel implements IResourceManagerReloadListener {
+	private static Map<ResourceLocation, IModelAnimationCustom> models = new HashMap<ResourceLocation, IModelAnimationCustom>();
 
-	protected IModelCustom model;
-	protected ResourceLocation resource;
-
-	public ReloadableModel(String resourceName) {
-		resource = new ResourceLocation(resourceName);
-		reloadModel();
+	public ReloadableModel() {
 		// TODO: Fix this hack by implementing a global Model Resource Manager
 		((IReloadableResourceManager) Minecraft.getMinecraft()
 				.getResourceManager()).registerReloadListener(this);
 	}
 
-	protected void render() {
-		model.renderAll();
-	}
-
-	protected void renderAnimation(double time) {
-		((IModelAnimationCustom) model).renderAnimationAll(time);
-	}
-
-	public void reloadModel() {
-		model = AdvancedModelLoader.loadModel(this.resource);
+	protected IModelAnimationCustom getModel(ResourceLocation resource) {
+		if (!models.containsKey(resource))
+			models.put(resource, (IModelAnimationCustom) AdvancedModelLoader
+					.loadModel(resource));
+		return models.get(resource);
 	}
 
 	@Override
 	public void onResourceManagerReload(IResourceManager var1) {
-		reloadModel();
+		for (ResourceLocation resource : models.keySet()) {
+			models.put(resource, (IModelAnimationCustom) AdvancedModelLoader
+					.loadModel(resource));
+		}
 	}
 
 }

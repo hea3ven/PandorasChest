@@ -34,6 +34,7 @@ public class PandorasChestMod {
 	public static PandorasChestCommonProxy proxy;
 
 	public static int pandorasChestRenderId;
+	public static int decorativeChestRenderId;
 	public static int fluorecentSpotRenderId;
 	public static int fluorecentTubeRenderId;
 
@@ -41,6 +42,7 @@ public class PandorasChestMod {
 	public static BlockPandorasChest PandorasChest;
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
+
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

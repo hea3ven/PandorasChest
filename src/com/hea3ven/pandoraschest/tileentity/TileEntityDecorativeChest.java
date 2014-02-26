@@ -10,8 +10,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityDecorativeChestRenderer;
-
 public class TileEntityDecorativeChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;
 
@@ -133,8 +131,6 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (this.numUsingPlayers < 0)
 				this.numUsingPlayers = 0;
 
-			TileEntityDecorativeChestRenderer.modelChest.reloadModel();
-
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
 					this.getBlockType(), 1, this.numUsingPlayers);
@@ -222,13 +218,12 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	@Override
 	public void updateEntity() {
 		animationFrame++;
-		animationFrame++;
 		if (animationFrame > 100)
 			animationFrame = 0;
 	}
 
 	public int getAnimationFrame() {
-		return animationFrame / 5;
+		return animationFrame;
 	}
 
 	public void setRotation(int rotation) {

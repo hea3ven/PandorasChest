@@ -38,4 +38,9 @@ public class BlockPandorasChest extends BlockDecorativeChest {
 		}
 	}
 
+	@Override
+	public int getRenderType() {
+		return PandorasChestMod.pandorasChestRenderId;
+	}
+
 }

@@ -3,9 +3,6 @@ package com.hea3ven.pandoraschest.tileentity;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
-
-import com.hea3ven.pandoraschest.client.renderer.tileentity.TileEntityDecorativeChestRenderer;
-
 import cpw.mods.fml.common.FMLLog;
 
 public class TileEntityPandorasChest extends TileEntityDecorativeChest {
@@ -46,8 +43,6 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 				this.selectedChest = this.nextSelectedChest;
 				this.nextSelectedChest = this.rand.nextInt(5);
 			}
-
-			TileEntityDecorativeChestRenderer.modelChest.reloadModel();
 
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,

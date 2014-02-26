@@ -150,7 +150,7 @@ public class BlockDecorativeChest extends BlockContainer {
 
 	@Override
 	public int getRenderType() {
-		return PandorasChestMod.pandorasChestRenderId;
+		return PandorasChestMod.decorativeChestRenderId;
 	}
 
 	@Override

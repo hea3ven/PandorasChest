@@ -1,13 +1,18 @@
 package com.hea3ven.pandoraschest.client.model;
 
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 
 public class ModelFluorecentTube extends ReloadableModel {
 
+	private ResourceLocation modelResource = new ResourceLocation(
+			"pandoraschest:models/fluorecent_tube.dae");
+
 	public ModelFluorecentTube() {
-		super("pandoraschest:models/fluorecent_tube.dae");
+		super();
 	}
 
 	public void render(TileEntityFluorecentTubeBlock chest, double x, double y,
@@ -41,7 +46,7 @@ public class ModelFluorecentTube extends ReloadableModel {
 		// GL11.glTranslatef((float) 0.5f, (float) 0.0f, (float)0.5f);
 
 		// this.renderAnimation(chest.getAnimationFrame());
-		this.model.renderAll();
+		this.getModel(modelResource).renderAll();
 
 		GL11.glPopMatrix();
 	}
@@ -50,7 +55,9 @@ public class ModelFluorecentTube extends ReloadableModel {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glTranslatef(0.0f, -0.5f, 0.0f);
-		this.render();
+
+		this.getModel(modelResource).renderAll();
+
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
