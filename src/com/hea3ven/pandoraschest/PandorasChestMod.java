@@ -45,7 +45,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "pandoraschest", name = "Pandora's Chest", version = "0.0.1")
+@Mod(modid = "pandoraschest", version = "1.0a1", dependencies = "required-after:Forge@[10.12.0.1024,);required-after:colladamodel@[1.0a1,)")
 public class PandorasChestMod {
 
 	@Instance("pandoraschest")
@@ -64,7 +64,6 @@ public class PandorasChestMod {
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
 
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		decorativeChest = new BlockDecorativeChest();
@@ -79,7 +78,8 @@ public class PandorasChestMod {
 		GameRegistry.registerTileEntity(TileEntityPandorasChest.class,
 				"tileentity.pandoraschest");
 		GameRegistry.registerBlock(fluorecentSpot, "Fluorecent Spot");
-		GameRegistry.registerBlock(fluorecentTube, ItemFluorecentTube.class, "Fluorecent Tube");
+		GameRegistry.registerBlock(fluorecentTube, ItemFluorecentTube.class,
+				"Fluorecent Tube");
 		GameRegistry.registerTileEntity(TileEntityFluorecentBlock.class,
 				"tileentity.fluorecentspot");
 		GameRegistry.registerTileEntity(TileEntityFluorecentTubeBlock.class,
