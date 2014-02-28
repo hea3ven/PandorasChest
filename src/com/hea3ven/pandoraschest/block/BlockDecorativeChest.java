@@ -26,6 +26,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -177,5 +178,9 @@ public class BlockDecorativeChest extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+
+	@Override
+	public void registerBlockIcons(IIconRegister p_149651_1_) {
 	}
 }

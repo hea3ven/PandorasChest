@@ -22,6 +22,7 @@
 package com.hea3ven.pandoraschest.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -118,4 +119,7 @@ public class BlockFluorecentTube extends BlockFluorecentSpot {
 
 	}
 
+	@Override
+	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	}
 }

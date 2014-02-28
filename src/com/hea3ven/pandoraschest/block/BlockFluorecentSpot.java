@@ -29,6 +29,7 @@ import static net.minecraftforge.common.util.ForgeDirection.WEST;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -120,4 +121,7 @@ public class BlockFluorecentSpot extends Block implements ITileEntityProvider {
     		this.setBlockBounds(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.5F);
     }
 
+	@Override
+	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	}
 }
