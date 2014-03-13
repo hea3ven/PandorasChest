@@ -21,6 +21,9 @@
 
 package com.hea3ven.pandoraschest;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
@@ -72,18 +75,36 @@ public class PandorasChestMod {
 		fluorecentTube = new BlockFluorecentTube();
 
 		GameRegistry.registerBlock(decorativeChest, "Decorative Chest");
-		GameRegistry.registerBlock(PandorasChest, "Pandora's Chest");
 		GameRegistry.registerTileEntity(TileEntityDecorativeChest.class,
 				"tileentity.decorativechest");
+		GameRegistry.addShapelessRecipe(new ItemStack(decorativeChest),
+				new ItemStack(Blocks.chest));
+
+		GameRegistry.registerBlock(PandorasChest, "Pandora's Chest");
 		GameRegistry.registerTileEntity(TileEntityPandorasChest.class,
 				"tileentity.pandoraschest");
+		GameRegistry
+				.addRecipe(new ItemStack(PandorasChest), "xyx", "yzy", "yxy",
+						'x', new ItemStack(Items.iron_ingot), 'y',
+						new ItemStack(Blocks.chest), 'z', new ItemStack(
+								Items.redstone));
+
 		GameRegistry.registerBlock(fluorecentSpot, "Fluorecent Spot");
-		GameRegistry.registerBlock(fluorecentTube, ItemFluorecentTube.class,
-				"Fluorecent Tube");
 		GameRegistry.registerTileEntity(TileEntityFluorecentBlock.class,
 				"tileentity.fluorecentspot");
+		GameRegistry.addRecipe(new ItemStack(fluorecentSpot), "x", "y", "z",
+				'x', new ItemStack(Items.iron_ingot), 'y', new ItemStack(
+						Items.glowstone_dust), 'z', new ItemStack(
+						Blocks.glass_pane));
+
+		GameRegistry.registerBlock(fluorecentTube, ItemFluorecentTube.class,
+				"Fluorecent Tube");
 		GameRegistry.registerTileEntity(TileEntityFluorecentTubeBlock.class,
 				"tileentity.fluorecenttube");
+		GameRegistry.addRecipe(new ItemStack(fluorecentTube), "xxx", "yyy",
+				"zzz", 'x', new ItemStack(Items.iron_ingot), 'y',
+				new ItemStack(Items.glowstone_dust), 'z', new ItemStack(
+						Blocks.glass_pane));
 
 		Configuration cfg = new Configuration(
 				event.getSuggestedConfigurationFile());
