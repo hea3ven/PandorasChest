@@ -21,6 +21,8 @@
 
 package com.hea3ven.pandoraschest.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -28,6 +30,7 @@ import net.minecraft.world.World;
 import com.hea3ven.pandoraschest.PandorasChestCommonProxy;
 import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.client.gui.GuiPandorasChest;
+import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.client.renderer.DecorativeChestRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentSpotRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentTubeRenderer;
@@ -52,6 +55,11 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 
 	@Override
 	public void registerRenderers() {
+		PandorasChestMod.modelManager = new ModelManager();
+
+		((IReloadableResourceManager) Minecraft.getMinecraft()
+				.getResourceManager()).registerReloadListener(PandorasChestMod.modelManager);
+
 		DecorativeChestRenderer decorativeChestRenderer = new DecorativeChestRenderer(
 				"pandoraschest:models/decorative_chest_open.dae",
 				"pandoraschest:models/decorative_chest_close.dae",

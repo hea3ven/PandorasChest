@@ -21,6 +21,8 @@
 
 package com.hea3ven.pandoraschest.tileentity;
 
+import com.hea3ven.pandoraschest.client.renderer.AnimationState;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -30,6 +32,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class TileEntityDecorativeChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;
@@ -38,8 +42,12 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 
 	public int numUsingPlayers;
 
-	private double openAnimationFrame;
-	private double closeAnimationFrame;
+	private AnimationState animation;
+
+	protected ResourceLocation openAnimation = new ResourceLocation(
+			"pandoraschest", "models/decorative_chest_open.dae");
+	protected ResourceLocation closeAnimation = new ResourceLocation(
+			"pandoraschest", "models/decorative_chest_close.dae");
 
 	private int rotation;
 
@@ -50,10 +58,20 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public TileEntityDecorativeChest(int slotsNum) {
 		chestContents = new ItemStack[slotsNum];
 		numUsingPlayers = 0;
-		openAnimationFrame = 0.0d;
-		closeAnimationFrame = -1.0d;
 		customName = null;
 		rotation = 2;
+		animation = null;
+	}
+
+	@Override
+	public void setWorldObj(World p_145834_1_) {
+		super.setWorldObj(p_145834_1_);
+		if (worldObj.isRemote) {
+			animation = new AnimationState();
+			animation.setAnimation(openAnimation);
+			animation.setLockFrame(true);
+			animation.setRepeat(false);
+		}
 	}
 
 	@Override
@@ -186,15 +204,15 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	@Override
 	public boolean receiveClientEvent(int par1, int par2) {
 		if (par1 == 1) {
-			if (this.numUsingPlayers == 0 && par2 > 0) {
-				this.openAnimationFrame = 0.05d;
-				this.closeAnimationFrame = -1.0d;
+			if (numUsingPlayers == 0 && par2 > 0) {
+				animation.setAnimation(openAnimation);
+				animation.setLockFrame(false);
 			}
-			if (this.numUsingPlayers > 0 && par2 <= 0) {
-				this.openAnimationFrame = -1.0d;
-				this.closeAnimationFrame = 0.05d;
+			if (numUsingPlayers > 0 && par2 <= 0) {
+				animation.setAnimation(closeAnimation);
+				animation.setLockFrame(false);
 			}
-			this.numUsingPlayers = par2;
+			numUsingPlayers = par2;
 			return true;
 		} else {
 			return super.receiveClientEvent(par1, par2);
@@ -249,29 +267,20 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	@Override
 	public void updateEntity() {
 		if (this.worldObj.isRemote) {
-			if (openAnimationFrame > 0) {
-				openAnimationFrame += 0.05d;
-			} else {
-				if (closeAnimationFrame > 0)
-					closeAnimationFrame += 0.05d;
+			if (!animation.addFrame()) {
+				if (animation.getResource().equals(openAnimation)) {
+					animation.setAnimation(closeAnimation);
+					animation.setLockFrame(true);
+				} else {
+					animation.setAnimation(openAnimation);
+					animation.setLockFrame(true);
+				}
 			}
 		}
 	}
 
-	public double getOpenAnimationFrame() {
-		return openAnimationFrame;
-	}
-
-	public void setOpenAnimationFrame(double frame) {
-		openAnimationFrame = frame;
-	}
-
-	public double getCloseAnimationFrame() {
-		return closeAnimationFrame;
-	}
-
-	public void setCloseAnimationFrame(double frame) {
-		closeAnimationFrame = frame;
+	public AnimationState getAnimationState() {
+		return animation;
 	}
 
 	public void setRotation(int rotation) {

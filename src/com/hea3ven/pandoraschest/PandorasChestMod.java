@@ -32,6 +32,7 @@ import com.hea3ven.pandoraschest.block.BlockDecorativeChest;
 import com.hea3ven.pandoraschest.block.BlockFluorecentSpot;
 import com.hea3ven.pandoraschest.block.BlockFluorecentTube;
 import com.hea3ven.pandoraschest.block.BlockPandorasChest;
+import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.item.ItemFluorecentTube;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
@@ -66,6 +67,8 @@ public class PandorasChestMod {
 	public static BlockPandorasChest PandorasChest;
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
+
+	public static ModelManager modelManager;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

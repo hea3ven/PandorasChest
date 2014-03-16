@@ -42,8 +42,7 @@ public class DecorativeChestRenderer extends TileEntitySpecialRenderer
 
 	public DecorativeChestRenderer(String openAnimationResourceName,
 			String closeAnimationResourceName, String textureResourceName) {
-		model = new ModelDecorativeChest(openAnimationResourceName,
-				closeAnimationResourceName);
+		model = new ModelDecorativeChest(new ResourceLocation(openAnimationResourceName));
 		textureResource = new ResourceLocation(textureResourceName);
 	}
 

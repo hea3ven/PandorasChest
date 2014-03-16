@@ -24,6 +24,7 @@ package com.hea3ven.pandoraschest.tileentity;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.common.FMLLog;
 
 public class TileEntityPandorasChest extends TileEntityDecorativeChest {
@@ -34,6 +35,11 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 
 	public TileEntityPandorasChest() {
 		super(27 * 5);
+
+		openAnimation = new ResourceLocation("pandoraschest",
+				"models/pandoras_chest_open.dae");
+		closeAnimation = new ResourceLocation("pandoraschest",
+				"models/pandoras_chest_close.dae");
 
 		this.nextSelectedChest = 0;
 		this.selectedChest = -1;

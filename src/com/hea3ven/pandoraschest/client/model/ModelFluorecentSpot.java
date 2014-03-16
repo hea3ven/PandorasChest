@@ -25,9 +25,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 
-public class ModelFluorecentSpot extends ReloadableModel {
+public class ModelFluorecentSpot {
 
 	private ResourceLocation modelResource = new ResourceLocation(
 			"pandoraschest:models/fluorecent_spot.dae");
@@ -55,7 +56,7 @@ public class ModelFluorecentSpot extends ReloadableModel {
 		// GL11.glTranslatef((float) 0.5f, (float) 0.0f, (float)0.5f);
 
 		// this.renderAnimation(chest.getAnimationFrame());
-		this.getModel(modelResource).renderAll();
+		PandorasChestMod.modelManager.getModel(modelResource).renderAll();
 
 		GL11.glPopMatrix();
 	}
@@ -65,7 +66,7 @@ public class ModelFluorecentSpot extends ReloadableModel {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glTranslatef(0.0f, -0.5f, 0.0f);
 
-		this.getModel(modelResource).renderAll();
+		PandorasChestMod.modelManager.getModel(modelResource).renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
