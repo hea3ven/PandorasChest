@@ -29,7 +29,6 @@ import static net.minecraftforge.common.util.ForgeDirection.WEST;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -41,13 +40,13 @@ import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 public class BlockFluorecentSpot extends Block implements ITileEntityProvider {
 
 	public BlockFluorecentSpot() {
-		super(Material.rock);
-
-		this.setCreativeTab(CreativeTabs.tabDecorations);
-		this.setBlockName("fluorecentSpot");
-		this.setHardness(0.5F);
-		this.setStepSound(soundTypeGlass);
-		this.setLightLevel(1.0F);
+		super(Material.glass);
+		setCreativeTab(CreativeTabs.tabDecorations);
+		setBlockName("fluorecentSpot");
+		setHardness(0.4F);
+		setStepSound(soundTypeGlass);
+		setLightLevel(1.0F);
+		setBlockTextureName("glass");
 	}
 
 	@Override
@@ -106,22 +105,18 @@ public class BlockFluorecentSpot extends Block implements ITileEntityProvider {
 	}
 
 	@Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
-    {
-    	int meta = world.getBlockMetadata(x, y, z);
-    	if(meta == 0)
-    		this.setBlockBounds(0.25F, 0.5F, 0.25F, 0.75F, 1.0F, 0.75F);
-    	if(meta == 1)
-    		this.setBlockBounds(0.0F, 0.25F, 0.25F, 0.5F, 0.75F, 0.75F);
-    	if(meta == 2)
-    		this.setBlockBounds(0.25F, 0.25F, 0.5F, 0.75F, 0.75F, 1.0F);
-    	if(meta == 3)
-    		this.setBlockBounds(0.5F, 0.25F, 0.25F, 1.0F, 0.75F, 0.75F);
-    	if(meta == 4)
-    		this.setBlockBounds(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.5F);
-    }
-
-	@Override
-	public void registerBlockIcons(IIconRegister p_149651_1_) {
+	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y,
+			int z) {
+		int meta = world.getBlockMetadata(x, y, z);
+		if (meta == 0)
+			this.setBlockBounds(0.25F, 0.5F, 0.25F, 0.75F, 1.0F, 0.75F);
+		if (meta == 1)
+			this.setBlockBounds(0.0F, 0.25F, 0.25F, 0.5F, 0.75F, 0.75F);
+		if (meta == 2)
+			this.setBlockBounds(0.25F, 0.25F, 0.5F, 0.75F, 0.75F, 1.0F);
+		if (meta == 3)
+			this.setBlockBounds(0.5F, 0.25F, 0.25F, 1.0F, 0.75F, 0.75F);
+		if (meta == 4)
+			this.setBlockBounds(0.25F, 0.25F, 0.0F, 0.75F, 0.75F, 0.5F);
 	}
 }

@@ -47,7 +47,7 @@ public class FluorecentTubeRenderer extends TileEntitySpecialRenderer implements
 	public void renderInventoryBlock(Block block, int metadata, int modelId,
 			RenderBlocks renderer) {
 		bindTexture(new ResourceLocation("pandoraschest",
-				"models/fluorecent_tube.png"));
+				"textures/blocks/fluorecent_tube.png"));
 		model.renderItem();
 	}
 
@@ -73,7 +73,7 @@ public class FluorecentTubeRenderer extends TileEntitySpecialRenderer implements
 		TileEntityFluorecentTubeBlock tubeTE = (TileEntityFluorecentTubeBlock) te;
 		if (tubeTE.isMaster()) {
 			bindTexture(new ResourceLocation("pandoraschest",
-					"models/fluorecent_tube.png"));
+					"textures/blocks/fluorecent_tube.png"));
 			model.render(tubeTE, x, y, z);
 		}
 

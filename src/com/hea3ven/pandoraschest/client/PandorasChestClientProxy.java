@@ -58,16 +58,17 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 		PandorasChestMod.modelManager = new ModelManager();
 
 		((IReloadableResourceManager) Minecraft.getMinecraft()
-				.getResourceManager()).registerReloadListener(PandorasChestMod.modelManager);
+				.getResourceManager())
+				.registerReloadListener(PandorasChestMod.modelManager);
 
 		DecorativeChestRenderer decorativeChestRenderer = new DecorativeChestRenderer(
 				"pandoraschest:models/decorative_chest_open.dae",
 				"pandoraschest:models/decorative_chest_close.dae",
-				"pandoraschest:models/decorative_chest.png");
+				"pandoraschest:textures/blocks/decorative_chest.png");
 		DecorativeChestRenderer pandorasChestRenderer = new DecorativeChestRenderer(
 				"pandoraschest:models/pandoras_chest_open.dae",
 				"pandoraschest:models/pandoras_chest_close.dae",
-				"pandoraschest:models/pandoras_chest.png");
+				"pandoraschest:textures/blocks/pandoras_chest.png");
 		FluorecentSpotRenderer fluorecentRenderer = new FluorecentSpotRenderer();
 		FluorecentTubeRenderer fluorecentTubeRenderer = new FluorecentTubeRenderer();
 

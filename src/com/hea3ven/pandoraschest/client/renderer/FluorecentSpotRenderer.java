@@ -46,7 +46,8 @@ public class FluorecentSpotRenderer extends TileEntitySpecialRenderer implements
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId,
 			RenderBlocks renderer) {
-		bindTexture(new ResourceLocation("pandoraschest", "models/fluorecent_spot.png"));
+		bindTexture(new ResourceLocation("pandoraschest",
+				"textures/blocks/fluorecent_spot.png"));
 		model.renderItem();
 	}
 
@@ -69,7 +70,7 @@ public class FluorecentSpotRenderer extends TileEntitySpecialRenderer implements
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z,
 			float var8) {
-		bindTexture(new ResourceLocation("pandoraschest", "models/fluorecent_spot.png"));
+		bindTexture(new ResourceLocation("pandoraschest", "textures/blocks/fluorecent_spot.png"));
 		model.render((TileEntityFluorecentBlock) te, x, y, z);
 
 	}
