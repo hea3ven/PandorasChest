@@ -140,7 +140,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	// public String getInvName() {
 	public String getInventoryName() {
 		return this.hasCustomInventoryName() ? this.customName
-				: "container.pandoraschest";
+				: blockType.getLocalizedName();
 	}
 
 	@Override

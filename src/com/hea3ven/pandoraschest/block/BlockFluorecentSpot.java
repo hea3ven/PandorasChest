@@ -44,8 +44,8 @@ public class BlockFluorecentSpot extends Block implements ITileEntityProvider {
 		super(Material.rock);
 
 		this.setCreativeTab(CreativeTabs.tabDecorations);
-		this.setBlockName("block.fluorecentSpot");
-		this.setHardness(0.3F);
+		this.setBlockName("fluorecentSpot");
+		this.setHardness(0.5F);
 		this.setStepSound(soundTypeGlass);
 		this.setLightLevel(1.0F);
 	}

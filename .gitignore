@@ -5,3 +5,6 @@ eclipse/
 .settings/
 .classpath
 .project
+
+*.blend1
+*.blend2

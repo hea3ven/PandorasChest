@@ -49,7 +49,7 @@ public class BlockDecorativeChest extends BlockContainer {
 	public BlockDecorativeChest() {
 		super(Material.rock);
 		this.setCreativeTab(CreativeTabs.tabDecorations);
-		this.setBlockName("block.decorativeChest");
+		this.setBlockName("decorativeChest");
 	}
 
 	@Override

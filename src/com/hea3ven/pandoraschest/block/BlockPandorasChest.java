@@ -34,7 +34,7 @@ public class BlockPandorasChest extends BlockDecorativeChest {
 	public BlockPandorasChest() {
 		super();
 		this.setCreativeTab(CreativeTabs.tabDecorations);
-		this.setBlockName("block.pandorasChest");
+		this.setBlockName("pandorasChest");
 	}
 
 	@Override

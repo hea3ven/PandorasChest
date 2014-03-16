@@ -31,6 +31,12 @@ import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 
 public class BlockFluorecentTube extends BlockFluorecentSpot {
+
+	public BlockFluorecentTube() {
+		super();
+		this.setBlockName("fluorecentTube");
+	}
+
 	@Override
 	public TileEntity createNewTileEntity(World var1, int var2) {
 		return new TileEntityFluorecentTubeBlock();
