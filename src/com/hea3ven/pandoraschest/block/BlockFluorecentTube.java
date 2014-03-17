@@ -33,7 +33,7 @@ public class BlockFluorecentTube extends BlockFluorecentSpot {
 
 	public BlockFluorecentTube() {
 		super();
-		this.setBlockName("fluorecentTube");
+		this.setBlockName("fluorescentTube");
 		setBlockTextureName("glass");
 	}
 

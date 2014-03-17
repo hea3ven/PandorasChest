@@ -42,7 +42,7 @@ public class BlockFluorecentSpot extends Block implements ITileEntityProvider {
 	public BlockFluorecentSpot() {
 		super(Material.glass);
 		setCreativeTab(CreativeTabs.tabDecorations);
-		setBlockName("fluorecentSpot");
+		setBlockName("fluorescentSpot");
 		setHardness(0.4F);
 		setStepSound(soundTypeGlass);
 		setLightLevel(1.0F);
