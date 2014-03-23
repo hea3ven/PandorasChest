@@ -172,6 +172,9 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (this.numUsingPlayers < 0)
 				this.numUsingPlayers = 0;
 
+			if(numUsingPlayers == 0)
+				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
 					this.getBlockType(), 1, this.numUsingPlayers);
@@ -186,6 +189,9 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public void closeInventory() {
 		if (!this.worldObj.isRemote) {
 			--this.numUsingPlayers;
+
+			if(numUsingPlayers == 0)
+				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
 					this.yCoord, this.zCoord, this.getBlockType());

@@ -69,6 +69,7 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 			if (this.numUsingPlayers == 0) {
 				this.selectedChest = this.nextSelectedChest;
 				this.nextSelectedChest = this.rand.nextInt(5);
+				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
 			++this.numUsingPlayers;
@@ -94,7 +95,11 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 		if (!this.worldObj.isRemote) {
 			--this.numUsingPlayers;
 			if (this.numUsingPlayers <= 0)
+			{
 				this.selectedChest = -1;
+				if(numUsingPlayers == 0)
+					worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			}
 
 			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
 					this.yCoord, this.zCoord, this.getBlockType());

@@ -19,6 +19,9 @@ public class AnimationState {
 		frame = 0.0d;
 	}
 	
+	public double getFrame() {
+		return frame;
+	}
 	public boolean addFrame() {
 		if(!lock)
 		{
