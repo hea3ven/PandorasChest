@@ -45,9 +45,9 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	private AnimationState animation;
 
 	protected ResourceLocation openAnimation = new ResourceLocation(
-			"pandoraschest", "models/decorative_chest_open.dae");
+			"pandoraschest", "models/clay_cabinet_open.dae");
 	protected ResourceLocation closeAnimation = new ResourceLocation(
-			"pandoraschest", "models/decorative_chest_close.dae");
+			"pandoraschest", "models/clay_cabinet_close.dae");
 
 	private int rotation;
 
@@ -173,7 +173,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 				this.numUsingPlayers = 0;
 
 			if(numUsingPlayers == 0)
-				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "pandoraschest:clay_drawer_open", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
@@ -191,7 +191,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			--this.numUsingPlayers;
 
 			if(numUsingPlayers == 0)
-				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "pandoraschest:clay_drawer_close", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
 					this.yCoord, this.zCoord, this.getBlockType());

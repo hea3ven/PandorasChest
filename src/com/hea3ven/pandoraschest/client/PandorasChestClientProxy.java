@@ -62,9 +62,9 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 				.registerReloadListener(PandorasChestMod.modelManager);
 
 		DecorativeChestRenderer decorativeChestRenderer = new DecorativeChestRenderer(
-				"pandoraschest:models/decorative_chest_open.dae",
-				"pandoraschest:models/decorative_chest_close.dae",
-				"pandoraschest:textures/blocks/decorative_chest.png");
+				"pandoraschest:models/clay_cabinet_open.dae",
+				"pandoraschest:models/clay_cabinet_close.dae",
+				"pandoraschest:textures/blocks/clay_cabinet.png");
 		DecorativeChestRenderer pandorasChestRenderer = new DecorativeChestRenderer(
 				"pandoraschest:models/pandoras_chest_open.dae",
 				"pandoraschest:models/pandoras_chest_close.dae",

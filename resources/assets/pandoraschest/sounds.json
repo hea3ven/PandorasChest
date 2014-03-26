@@ -1,0 +1,17 @@
+{
+	"clay_drawer_open":	{
+			"category": "master",
+			"sounds": [
+				{ "name": "clay_drawer_open",
+				  "stream": false }
+			]
+		},
+	"clay_drawer_close": {
+		"category": "master",
+		"sounds": [
+			{ "name": "clay_drawer_close",
+			  "stream": false }
+		]
+	}
+}
+		
