@@ -29,11 +29,13 @@ import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.PandorasChestCommonProxy;
 import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.pandoraschest.client.gui.GuiClayDrawer;
 import com.hea3ven.pandoraschest.client.gui.GuiPandorasChest;
 import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.client.renderer.DecorativeChestRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentSpotRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentTubeRenderer;
+import com.hea3ven.pandoraschest.inventory.ContainerClayDrawer;
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
@@ -108,8 +110,15 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity instanceof TileEntityDecorativeChest) {
-			return new ContainerPandorasChest(player.inventory,
-					(TileEntityDecorativeChest) tileEntity);
+			if (ID == 0) {
+				TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
+				return new ContainerClayDrawer(player.inventory, te,
+						te.getUpperInventory(), te.getLeftInventory(),
+						te.getRightInventory(), te.getBottomInventory());
+			} else if (ID == 1) {
+				return new ContainerPandorasChest(player.inventory,
+						(TileEntityDecorativeChest) tileEntity);
+			}
 		}
 		return null;
 	}
@@ -119,8 +128,15 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity instanceof TileEntityDecorativeChest) {
-			return new GuiPandorasChest(player.inventory,
-					((TileEntityDecorativeChest) tileEntity));
+			if (ID == 0) {
+				TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
+				return new GuiClayDrawer(player.inventory, te,
+						te.getUpperInventory(), te.getLeftInventory(),
+						te.getRightInventory(), te.getBottomInventory());
+			} else if (ID == 1) {
+				return new GuiPandorasChest(player.inventory,
+						((TileEntityDecorativeChest) tileEntity));
+			}
 		}
 		return null;
 	}

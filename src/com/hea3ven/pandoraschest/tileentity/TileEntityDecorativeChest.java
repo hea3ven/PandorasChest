@@ -21,8 +21,6 @@
 
 package com.hea3ven.pandoraschest.tileentity;
 
-import com.hea3ven.pandoraschest.client.renderer.AnimationState;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -34,6 +32,8 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import com.hea3ven.pandoraschest.client.renderer.AnimationState;
 
 public class TileEntityDecorativeChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;
@@ -139,8 +139,8 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	@Override
 	// public String getInvName() {
 	public String getInventoryName() {
-		return this.hasCustomInventoryName() ? this.customName
-				: blockType.getLocalizedName();
+		return this.hasCustomInventoryName() ? this.customName : blockType
+				.getLocalizedName();
 	}
 
 	@Override
@@ -172,8 +172,11 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (this.numUsingPlayers < 0)
 				this.numUsingPlayers = 0;
 
-			if(numUsingPlayers == 0)
-				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "pandoraschest:clay_drawer_open", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			if (numUsingPlayers == 0)
+				worldObj.playSoundEffect((double) xCoord + 0.5D,
+						(double) yCoord + 0.5D, (double) zCoord + 0.5D,
+						"pandoraschest:clay_drawer_open", 0.5F,
+						worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			++this.numUsingPlayers;
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
@@ -190,8 +193,11 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 		if (!this.worldObj.isRemote) {
 			--this.numUsingPlayers;
 
-			if(numUsingPlayers == 0)
-				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "pandoraschest:clay_drawer_close", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			if (numUsingPlayers == 0)
+				worldObj.playSoundEffect((double) xCoord + 0.5D,
+						(double) yCoord + 0.5D, (double) zCoord + 0.5D,
+						"pandoraschest:clay_drawer_close", 0.5F,
+						worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
 					this.yCoord, this.zCoord, this.getBlockType());
@@ -309,6 +315,54 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
 		this.readFromNBT(pkt.func_148857_g());
 		super.onDataPacket(net, pkt);
+	}
+
+	public TileEntityDecorativeChest getUpperInventory() {
+		TileEntity te = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+		if (te != null && te instanceof TileEntityDecorativeChest)
+			return (TileEntityDecorativeChest) te;
+		else
+			return null;
+	}
+
+	public TileEntityDecorativeChest getLeftInventory() {
+		TileEntity te = null;
+		if (rotation == 0)
+			te = worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
+		else if (rotation == 1)
+			te = worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
+		else if (rotation == 2)
+			te = worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
+		else if (rotation == 3)
+			te = worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
+		if (te != null && te instanceof TileEntityDecorativeChest)
+			return (TileEntityDecorativeChest) te;
+		else
+			return null;
+	}
+
+	public TileEntityDecorativeChest getRightInventory() {
+		TileEntity te = null;
+		if (rotation == 0)
+			te = worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
+		else if (rotation == 1)
+			te = worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
+		else if (rotation == 2)
+			te = worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
+		else if (rotation == 3)
+			te = worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
+		if (te != null && te instanceof TileEntityDecorativeChest)
+			return (TileEntityDecorativeChest) te;
+		else
+			return null;
+	}
+
+	public TileEntityDecorativeChest getBottomInventory() {
+		TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+		if (te != null && te instanceof TileEntityDecorativeChest)
+			return (TileEntityDecorativeChest) te;
+		else
+			return null;
 	}
 
 }

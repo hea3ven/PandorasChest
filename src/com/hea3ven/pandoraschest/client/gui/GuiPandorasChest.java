@@ -60,7 +60,7 @@ public class GuiPandorasChest extends GuiContainer {
 						this.playerInventory.hasCustomInventoryName() ? this.playerInventory
 								.getInventoryName() : I18n.format(
 								this.playerInventory.getInventoryName(),
-								new Object[0]), 8, this.ySize - 96 + 2, 4210752);
+								new Object[0]), 8, this.ySize - 96 + 3, 4210752);
 	}
 
 	@Override
