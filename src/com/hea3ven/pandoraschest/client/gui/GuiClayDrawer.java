@@ -30,25 +30,25 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.hea3ven.pandoraschest.inventory.ContainerClayDrawer;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
 public class GuiClayDrawer extends GuiContainer {
 
 	private static final ResourceLocation field_110421_t = new ResourceLocation(
 			"pandoraschest:textures/gui/container/clay_drawer.png");
 	private IInventory playerInventory;
-	private TileEntityDecorativeChest chestInventory;
-	private TileEntityDecorativeChest topInventory;
-	private TileEntityDecorativeChest leftInventory;
-	private TileEntityDecorativeChest rightInventory;
-	private TileEntityDecorativeChest bottomInventory;
+	private TileEntityBaseChest chestInventory;
+	private TileEntityBaseChest topInventory;
+	private TileEntityBaseChest leftInventory;
+	private TileEntityBaseChest rightInventory;
+	private TileEntityBaseChest bottomInventory;
 
 	public GuiClayDrawer(InventoryPlayer playerInventory,
-			TileEntityDecorativeChest chestInventory,
-			TileEntityDecorativeChest topInventory,
-			TileEntityDecorativeChest leftInventory,
-			TileEntityDecorativeChest rightInventory,
-			TileEntityDecorativeChest bottomInventory) {
+			TileEntityBaseChest chestInventory,
+			TileEntityBaseChest topInventory,
+			TileEntityBaseChest leftInventory,
+			TileEntityBaseChest rightInventory,
+			TileEntityBaseChest bottomInventory) {
 		super(new ContainerClayDrawer(playerInventory, chestInventory,
 				topInventory, leftInventory, rightInventory, bottomInventory));
 		this.playerInventory = playerInventory;

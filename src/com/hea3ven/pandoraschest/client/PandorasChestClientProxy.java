@@ -32,12 +32,13 @@ import com.hea3ven.pandoraschest.PandorasChestMod;
 import com.hea3ven.pandoraschest.client.gui.GuiClayDrawer;
 import com.hea3ven.pandoraschest.client.gui.GuiPandorasChest;
 import com.hea3ven.pandoraschest.client.model.ModelManager;
-import com.hea3ven.pandoraschest.client.renderer.DecorativeChestRenderer;
+import com.hea3ven.pandoraschest.client.renderer.BaseChestRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentSpotRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentTubeRenderer;
 import com.hea3ven.pandoraschest.inventory.ContainerClayDrawer;
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
@@ -63,11 +64,11 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 				.getResourceManager())
 				.registerReloadListener(PandorasChestMod.modelManager);
 
-		DecorativeChestRenderer decorativeChestRenderer = new DecorativeChestRenderer(
+		BaseChestRenderer clayDrawerRenderer = new BaseChestRenderer(
 				"pandoraschest:models/clay_cabinet_open.dae",
 				"pandoraschest:models/clay_cabinet_close.dae",
 				"pandoraschest:textures/blocks/clay_cabinet.png");
-		DecorativeChestRenderer pandorasChestRenderer = new DecorativeChestRenderer(
+		BaseChestRenderer pandorasChestRenderer = new BaseChestRenderer(
 				"pandoraschest:models/pandoras_chest_open.dae",
 				"pandoraschest:models/pandoras_chest_close.dae",
 				"pandoraschest:textures/blocks/pandoras_chest.png");
@@ -77,16 +78,16 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityPandorasChest.class, pandorasChestRenderer);
 		ClientRegistry.bindTileEntitySpecialRenderer(
-				TileEntityDecorativeChest.class, decorativeChestRenderer);
+				TileEntityBaseChest.class, clayDrawerRenderer);
 		PandorasChestMod.pandorasChestRenderId = RenderingRegistry
 				.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(
 				PandorasChestMod.pandorasChestRenderId, pandorasChestRenderer);
-		PandorasChestMod.decorativeChestRenderId = RenderingRegistry
+		PandorasChestMod.clayDrawerRenderId = RenderingRegistry
 				.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(
-				PandorasChestMod.decorativeChestRenderId,
-				decorativeChestRenderer);
+				PandorasChestMod.clayDrawerRenderId,
+				clayDrawerRenderer);
 
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityFluorecentBlock.class, fluorecentRenderer);
@@ -109,15 +110,15 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 			int x, int y, int z) {
 
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity instanceof TileEntityDecorativeChest) {
+		if (tileEntity instanceof TileEntityBaseChest) {
 			if (ID == 0) {
-				TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
+				TileEntityClayDrawer te = (TileEntityClayDrawer) tileEntity;
 				return new ContainerClayDrawer(player.inventory, te,
 						te.getUpperInventory(), te.getLeftInventory(),
 						te.getRightInventory(), te.getBottomInventory());
 			} else if (ID == 1) {
 				return new ContainerPandorasChest(player.inventory,
-						(TileEntityDecorativeChest) tileEntity);
+						(TileEntityBaseChest) tileEntity);
 			}
 		}
 		return null;
@@ -127,15 +128,15 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity instanceof TileEntityDecorativeChest) {
+		if (tileEntity instanceof TileEntityBaseChest) {
 			if (ID == 0) {
-				TileEntityDecorativeChest te = (TileEntityDecorativeChest) tileEntity;
+				TileEntityClayDrawer te = (TileEntityClayDrawer) tileEntity;
 				return new GuiClayDrawer(player.inventory, te,
 						te.getUpperInventory(), te.getLeftInventory(),
 						te.getRightInventory(), te.getBottomInventory());
 			} else if (ID == 1) {
 				return new GuiPandorasChest(player.inventory,
-						((TileEntityDecorativeChest) tileEntity));
+						((TileEntityBaseChest) tileEntity));
 			}
 		}
 		return null;

@@ -35,32 +35,28 @@ import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.client.renderer.AnimationState;
 
-public class TileEntityDecorativeChest extends TileEntity implements IInventory {
+public abstract class TileEntityBaseChest extends TileEntity implements IInventory {
 	protected ItemStack[] chestContents;
 
 	private String customName;
+	private int rotation;
 
 	public int numUsingPlayers;
 
 	private AnimationState animation;
 
-	protected ResourceLocation openAnimation = new ResourceLocation(
-			"pandoraschest", "models/clay_cabinet_open.dae");
-	protected ResourceLocation closeAnimation = new ResourceLocation(
-			"pandoraschest", "models/clay_cabinet_close.dae");
+	protected ResourceLocation openAnimation;
+	protected ResourceLocation closeAnimation;
 
-	private int rotation;
-
-	public TileEntityDecorativeChest() {
-		this(27);
-	}
-
-	public TileEntityDecorativeChest(int slotsNum) {
+	public TileEntityBaseChest(int slotsNum,
+			ResourceLocation openAnimation, ResourceLocation closeAnimation) {
 		chestContents = new ItemStack[slotsNum];
 		numUsingPlayers = 0;
 		customName = null;
 		rotation = 2;
 		animation = null;
+		this.openAnimation = openAnimation;
+		this.closeAnimation = closeAnimation;
 	}
 
 	@Override
@@ -137,14 +133,12 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 	}
 
 	@Override
-	// public String getInvName() {
 	public String getInventoryName() {
 		return this.hasCustomInventoryName() ? this.customName : blockType
 				.getLocalizedName();
 	}
 
 	@Override
-	// public boolean isInvNameLocalized() {
 	public boolean hasCustomInventoryName() {
 		return this.customName != null && this.customName.length() > 0;
 	}
@@ -166,6 +160,9 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 				(double) this.zCoord + 0.5D) <= 64.0D;
 	}
 
+	protected abstract String getOpenSound();
+	protected abstract String getCloseSound();
+
 	@Override
 	public void openInventory() {
 		if (!this.worldObj.isRemote) {
@@ -175,7 +172,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (numUsingPlayers == 0)
 				worldObj.playSoundEffect((double) xCoord + 0.5D,
 						(double) yCoord + 0.5D, (double) zCoord + 0.5D,
-						"pandoraschest:clay_drawer_open", 0.5F,
+						getOpenSound(), 0.5F,
 						worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			++this.numUsingPlayers;
@@ -196,7 +193,7 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 			if (numUsingPlayers == 0)
 				worldObj.playSoundEffect((double) xCoord + 0.5D,
 						(double) yCoord + 0.5D, (double) zCoord + 0.5D,
-						"pandoraschest:clay_drawer_close", 0.5F,
+						getCloseSound(), 0.5F,
 						worldObj.rand.nextFloat() * 0.1F + 0.9F);
 
 			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
@@ -316,53 +313,4 @@ public class TileEntityDecorativeChest extends TileEntity implements IInventory 
 		this.readFromNBT(pkt.func_148857_g());
 		super.onDataPacket(net, pkt);
 	}
-
-	public TileEntityDecorativeChest getUpperInventory() {
-		TileEntity te = worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
-		if (te != null && te instanceof TileEntityDecorativeChest)
-			return (TileEntityDecorativeChest) te;
-		else
-			return null;
-	}
-
-	public TileEntityDecorativeChest getLeftInventory() {
-		TileEntity te = null;
-		if (rotation == 0)
-			te = worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
-		else if (rotation == 1)
-			te = worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
-		else if (rotation == 2)
-			te = worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
-		else if (rotation == 3)
-			te = worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
-		if (te != null && te instanceof TileEntityDecorativeChest)
-			return (TileEntityDecorativeChest) te;
-		else
-			return null;
-	}
-
-	public TileEntityDecorativeChest getRightInventory() {
-		TileEntity te = null;
-		if (rotation == 0)
-			te = worldObj.getTileEntity(xCoord - 1, yCoord, zCoord);
-		else if (rotation == 1)
-			te = worldObj.getTileEntity(xCoord, yCoord, zCoord - 1);
-		else if (rotation == 2)
-			te = worldObj.getTileEntity(xCoord + 1, yCoord, zCoord);
-		else if (rotation == 3)
-			te = worldObj.getTileEntity(xCoord, yCoord, zCoord + 1);
-		if (te != null && te instanceof TileEntityDecorativeChest)
-			return (TileEntityDecorativeChest) te;
-		else
-			return null;
-	}
-
-	public TileEntityDecorativeChest getBottomInventory() {
-		TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
-		if (te != null && te instanceof TileEntityDecorativeChest)
-			return (TileEntityDecorativeChest) te;
-		else
-			return null;
-	}
-
 }

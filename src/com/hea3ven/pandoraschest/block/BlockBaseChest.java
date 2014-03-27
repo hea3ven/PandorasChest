@@ -34,35 +34,26 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
-public class BlockDecorativeChest extends BlockContainer {
+public abstract class BlockBaseChest extends BlockContainer {
 
 	private final Random random = new Random();
 
-	public BlockDecorativeChest() {
+	public BlockBaseChest() {
 		super(Material.rock);
 		setCreativeTab(CreativeTabs.tabDecorations);
 		setHardness(2.5F);
-		setBlockName("decorativeChest");
-		setBlockTextureName("pandoraschest:decorative_chest");
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int metadata) {
-		TileEntityDecorativeChest tileEntity = new TileEntityDecorativeChest();
-		return tileEntity;
 	}
 
 	@Override
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 			EntityLivingBase player, ItemStack par6ItemStack) {
-		TileEntityDecorativeChest te = (TileEntityDecorativeChest) par1World
+		TileEntityBaseChest te = (TileEntityBaseChest) par1World
 				.getTileEntity(par2, par3, par4);
 
 		int l = MathHelper
@@ -77,8 +68,8 @@ public class BlockDecorativeChest extends BlockContainer {
 	@Override
 	public void breakBlock(World par1World, int par2, int par3, int par4,
 			Block par5, int par6) {
-		TileEntityDecorativeChest tileentitychest = (TileEntityDecorativeChest) par1World
-				.getTileEntity(par2, par3, par4);
+		IInventory tileentitychest = this.getInventory(par1World, par2, par3,
+				par4);
 
 		if (tileentitychest != null) {
 			for (int j1 = 0; j1 < tileentitychest.getSizeInventory(); ++j1) {
@@ -132,15 +123,19 @@ public class BlockDecorativeChest extends BlockContainer {
 		if (world.isRemote) {
 			return true;
 		} else {
-			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			TileEntityBaseChest tileEntity = (TileEntityBaseChest) world
+					.getTileEntity(x, y, z);
 			if (tileEntity == null || player.isSneaking()) {
 				return false;
 			}
 
-			player.openGui(PandorasChestMod.instance, 0, world, x, y, z);
+			player.openGui(PandorasChestMod.instance, getGuiId(), world, x, y,
+					z);
 			return true;
 		}
 	}
+
+	public abstract int getGuiId();
 
 	public IInventory getInventory(World par1World, int par2, int par3, int par4) {
 		return (IInventory) par1World.getTileEntity(par2, par3, par4);
@@ -169,11 +164,6 @@ public class BlockDecorativeChest extends BlockContainer {
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
-	}
-
-	@Override
-	public int getRenderType() {
-		return PandorasChestMod.decorativeChestRenderId;
 	}
 
 	@Override

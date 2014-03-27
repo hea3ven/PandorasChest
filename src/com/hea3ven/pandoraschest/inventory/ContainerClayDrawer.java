@@ -8,19 +8,19 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
 public class ContainerClayDrawer extends Container {
 
-	private LinkedList<TileEntityDecorativeChest> chests;
+	private LinkedList<TileEntityBaseChest> chests;
 
 	public ContainerClayDrawer(InventoryPlayer playerInventory,
-			TileEntityDecorativeChest chestInventory,
-			TileEntityDecorativeChest topInventory,
-			TileEntityDecorativeChest leftInventory,
-			TileEntityDecorativeChest rightInventory,
-			TileEntityDecorativeChest bottomInventory) {
-		chests = new LinkedList<TileEntityDecorativeChest>();
+			TileEntityBaseChest chestInventory,
+			TileEntityBaseChest topInventory,
+			TileEntityBaseChest leftInventory,
+			TileEntityBaseChest rightInventory,
+			TileEntityBaseChest bottomInventory) {
+		chests = new LinkedList<TileEntityBaseChest>();
 		chests.add(chestInventory);
 		if (topInventory != null)
 			chests.add(topInventory);
@@ -31,7 +31,7 @@ public class ContainerClayDrawer extends Container {
 		if (bottomInventory != null)
 			chests.add(bottomInventory);
 
-		for (TileEntityDecorativeChest chest : chests) {
+		for (TileEntityBaseChest chest : chests) {
 			chest.openInventory();
 		}
 
@@ -111,7 +111,7 @@ public class ContainerClayDrawer extends Container {
 
 	public void onContainerClosed(EntityPlayer par1EntityPlayer) {
 		super.onContainerClosed(par1EntityPlayer);
-		for (TileEntityDecorativeChest chest : chests) {
+		for (TileEntityBaseChest chest : chests) {
 			chest.closeInventory();
 		}
 

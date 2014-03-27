@@ -29,17 +29,17 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
 public class GuiPandorasChest extends GuiContainer {
 
 	private static final ResourceLocation field_110421_t = new ResourceLocation(
 			"textures/gui/container/generic_54.png");
 	private IInventory playerInventory;
-	private TileEntityDecorativeChest chestInventory;
+	private TileEntityBaseChest chestInventory;
 
 	public GuiPandorasChest(IInventory playerInventory,
-			TileEntityDecorativeChest chestInventory) {
+			TileEntityBaseChest chestInventory) {
 		super(new ContainerPandorasChest(playerInventory, chestInventory));
 		this.playerInventory = playerInventory;
 		this.chestInventory = chestInventory;

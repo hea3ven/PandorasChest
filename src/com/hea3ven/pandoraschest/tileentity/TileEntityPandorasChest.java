@@ -27,19 +27,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.common.FMLLog;
 
-public class TileEntityPandorasChest extends TileEntityDecorativeChest {
+public class TileEntityPandorasChest extends TileEntityBaseChest {
 
 	private int nextSelectedChest;
 	public int selectedChest;
 	private Random rand = new Random();
 
 	public TileEntityPandorasChest() {
-		super(27 * 5);
-
-		openAnimation = new ResourceLocation("pandoraschest",
-				"models/pandoras_chest_open.dae");
-		closeAnimation = new ResourceLocation("pandoraschest",
-				"models/pandoras_chest_close.dae");
+		super(27 * 5, new ResourceLocation("pandoraschest",
+				"models/pandoras_chest_open.dae"), new ResourceLocation(
+				"pandoraschest", "models/pandoras_chest_close.dae"));
 
 		this.nextSelectedChest = 0;
 		this.selectedChest = -1;
@@ -63,52 +60,33 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 	@Override
 	public void openInventory() {
 		if (!this.worldObj.isRemote) {
-			if (this.numUsingPlayers < 0)
-				this.numUsingPlayers = 0;
-
 			if (this.numUsingPlayers == 0) {
 				this.selectedChest = this.nextSelectedChest;
 				this.nextSelectedChest = this.rand.nextInt(5);
-				worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
-			++this.numUsingPlayers;
-			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
-					this.getBlockType(), 1, this.numUsingPlayers);
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
 					this.getBlockType(), 2, this.selectedChest);
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
 					this.getBlockType(), 3, this.nextSelectedChest);
-			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-					this.yCoord, this.zCoord, this.getBlockType());
-			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-					this.yCoord - 1, this.zCoord, this.getBlockType());
 		} else {
 			if (this.selectedChest == -1) {
 				this.selectedChest = this.nextSelectedChest;
 			}
 		}
+		super.openInventory();
 	}
 
 	@Override
 	public void closeInventory() {
+		super.closeInventory();
 		if (!this.worldObj.isRemote) {
-			--this.numUsingPlayers;
-			if (this.numUsingPlayers <= 0)
-			{
+			if (this.numUsingPlayers <= 0) {
 				this.selectedChest = -1;
-				if(numUsingPlayers == 0)
-					worldObj.playSoundEffect((double)xCoord + 0.5D, (double)yCoord + 0.5D, (double)zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
-			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-					this.yCoord, this.zCoord, this.getBlockType());
-			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
-					this.getBlockType(), 1, this.numUsingPlayers);
 			this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord,
 					this.getBlockType(), 2, this.selectedChest);
-			this.worldObj.notifyBlocksOfNeighborChange(this.xCoord,
-					this.yCoord - 1, this.zCoord, this.getBlockType());
 		}
 	}
 
@@ -132,6 +110,16 @@ public class TileEntityPandorasChest extends TileEntityDecorativeChest {
 		} else {
 			return super.receiveClientEvent(par1, par2);
 		}
+	}
+
+	@Override
+	protected String getOpenSound() {
+		return "random.chestopen";
+	}
+
+	@Override
+	protected String getCloseSound() {
+		return "random.chestclosed";
 	}
 
 }

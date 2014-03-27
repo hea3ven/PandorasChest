@@ -28,13 +28,13 @@ import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Level;
 
-import com.hea3ven.pandoraschest.block.BlockDecorativeChest;
+import com.hea3ven.pandoraschest.block.BlockClayDrawer;
 import com.hea3ven.pandoraschest.block.BlockFluorecentSpot;
 import com.hea3ven.pandoraschest.block.BlockFluorecentTube;
 import com.hea3ven.pandoraschest.block.BlockPandorasChest;
 import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.item.ItemFluorecentTube;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
@@ -59,11 +59,11 @@ public class PandorasChestMod {
 	public static PandorasChestCommonProxy proxy;
 
 	public static int pandorasChestRenderId;
-	public static int decorativeChestRenderId;
+	public static int clayDrawerRenderId;
 	public static int fluorecentSpotRenderId;
 	public static int fluorecentTubeRenderId;
 
-	public static BlockDecorativeChest decorativeChest;
+	public static BlockClayDrawer clayDrawer;
 	public static BlockPandorasChest PandorasChest;
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
@@ -72,16 +72,16 @@ public class PandorasChestMod {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		decorativeChest = new BlockDecorativeChest();
+		clayDrawer = new BlockClayDrawer();
 		PandorasChest = new BlockPandorasChest();
 		fluorecentSpot = new BlockFluorecentSpot();
 		fluorecentTube = new BlockFluorecentTube();
 
-		GameRegistry.registerBlock(decorativeChest, "Decorative Chest");
-		GameRegistry.registerTileEntity(TileEntityDecorativeChest.class,
-				"tileentity.decorativechest");
-		GameRegistry.addShapelessRecipe(new ItemStack(decorativeChest),
-				new ItemStack(Blocks.chest));
+		GameRegistry.registerBlock(clayDrawer, "Clay Drawer");
+		GameRegistry.registerTileEntity(TileEntityClayDrawer.class,
+				"tileentity.claydrawer");
+		GameRegistry.addRecipe(new ItemStack(clayDrawer), "xxx", "x x", "xxx",
+				'x', new ItemStack(Blocks.hardened_clay));
 
 		GameRegistry.registerBlock(PandorasChest, "Pandora's Chest");
 		GameRegistry.registerTileEntity(TileEntityPandorasChest.class,

@@ -26,16 +26,16 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
-import com.hea3ven.pandoraschest.tileentity.TileEntityDecorativeChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
-public class ModelDecorativeChest {
+public class ModelBaseChest {
 	private ResourceLocation openResourceName;
 	
-	public ModelDecorativeChest(ResourceLocation resource) {
+	public ModelBaseChest(ResourceLocation resource) {
 		openResourceName = resource;
 	}
 
-	public void render(TileEntityDecorativeChest chest, double x, double y,
+	public void render(TileEntityBaseChest chest, double x, double y,
 			double z) {
 		GL11.glPushMatrix();
 
