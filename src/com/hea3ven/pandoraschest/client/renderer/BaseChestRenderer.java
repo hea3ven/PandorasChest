@@ -29,27 +29,27 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.pandoraschest.block.BlockBaseChest;
 import com.hea3ven.pandoraschest.client.model.ModelBaseChest;
 import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class BaseChestRenderer extends TileEntitySpecialRenderer
-		implements ISimpleBlockRenderingHandler {
+public class BaseChestRenderer extends TileEntitySpecialRenderer implements
+		ISimpleBlockRenderingHandler {
 
 	private ModelBaseChest model;
-	private ResourceLocation textureResource;
 
 	public BaseChestRenderer(String openAnimationResourceName,
-			String closeAnimationResourceName, String textureResourceName) {
-		model = new ModelBaseChest(new ResourceLocation(openAnimationResourceName));
-		textureResource = new ResourceLocation(textureResourceName);
+			String closeAnimationResourceName) {
+		model = new ModelBaseChest(new ResourceLocation(
+				openAnimationResourceName));
 	}
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId,
 			RenderBlocks renderer) {
-		bindTexture(textureResource);
+		bindTexture(((BlockBaseChest) block).getTexture(metadata));
 		model.renderItem();
 	}
 
@@ -73,7 +73,8 @@ public class BaseChestRenderer extends TileEntitySpecialRenderer
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y,
 			double z, float f) {
 		TileEntityBaseChest te = (TileEntityBaseChest) tileEntity;
-		bindTexture(textureResource);
+		bindTexture(((BlockBaseChest) tileEntity.blockType)
+				.getTexture(tileEntity.getBlockMetadata()));
 
 		model.render(te, x, y, z);
 	}

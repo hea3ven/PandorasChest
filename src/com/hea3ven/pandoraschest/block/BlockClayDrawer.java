@@ -1,6 +1,7 @@
 package com.hea3ven.pandoraschest.block;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
@@ -28,6 +29,11 @@ public class BlockClayDrawer extends BlockBaseChest {
 	@Override
 	public int getGuiId() {
 		return 0;
+	}
+
+	@Override
+	public ResourceLocation getTexture(int meta) {
+		return new ResourceLocation("pandoraschest", "textures/blocks/clay_drawer.png");
 	}
 
 }

@@ -37,8 +37,8 @@ import com.hea3ven.pandoraschest.client.renderer.FluorecentSpotRenderer;
 import com.hea3ven.pandoraschest.client.renderer.FluorecentTubeRenderer;
 import com.hea3ven.pandoraschest.inventory.ContainerClayDrawer;
 import com.hea3ven.pandoraschest.inventory.ContainerPandorasChest;
-import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
 import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
+import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
@@ -66,19 +66,17 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 
 		BaseChestRenderer clayDrawerRenderer = new BaseChestRenderer(
 				"pandoraschest:models/clay_cabinet_open.dae",
-				"pandoraschest:models/clay_cabinet_close.dae",
-				"pandoraschest:textures/blocks/clay_cabinet.png");
+				"pandoraschest:models/clay_cabinet_close.dae");
 		BaseChestRenderer pandorasChestRenderer = new BaseChestRenderer(
 				"pandoraschest:models/pandoras_chest_open.dae",
-				"pandoraschest:models/pandoras_chest_close.dae",
-				"pandoraschest:textures/blocks/pandoras_chest.png");
+				"pandoraschest:models/pandoras_chest_close.dae");
 		FluorecentSpotRenderer fluorecentRenderer = new FluorecentSpotRenderer();
 		FluorecentTubeRenderer fluorecentTubeRenderer = new FluorecentTubeRenderer();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityPandorasChest.class, pandorasChestRenderer);
-		ClientRegistry.bindTileEntitySpecialRenderer(
-				TileEntityBaseChest.class, clayDrawerRenderer);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBaseChest.class,
+				clayDrawerRenderer);
 		PandorasChestMod.pandorasChestRenderId = RenderingRegistry
 				.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(
@@ -86,8 +84,7 @@ public class PandorasChestClientProxy extends PandorasChestCommonProxy
 		PandorasChestMod.clayDrawerRenderId = RenderingRegistry
 				.getNextAvailableRenderId();
 		RenderingRegistry.registerBlockHandler(
-				PandorasChestMod.clayDrawerRenderId,
-				clayDrawerRenderer);
+				PandorasChestMod.clayDrawerRenderId, clayDrawerRenderer);
 
 		ClientRegistry.bindTileEntitySpecialRenderer(
 				TileEntityFluorecentBlock.class, fluorecentRenderer);

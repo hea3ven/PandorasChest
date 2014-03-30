@@ -23,6 +23,7 @@ package com.hea3ven.pandoraschest;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemCloth;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 
@@ -32,6 +33,7 @@ import com.hea3ven.pandoraschest.block.BlockClayDrawer;
 import com.hea3ven.pandoraschest.block.BlockFluorecentSpot;
 import com.hea3ven.pandoraschest.block.BlockFluorecentTube;
 import com.hea3ven.pandoraschest.block.BlockPandorasChest;
+import com.hea3ven.pandoraschest.block.BlockStainedClayDrawer;
 import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.item.ItemFluorecentTube;
 import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
@@ -64,6 +66,7 @@ public class PandorasChestMod {
 	public static int fluorecentTubeRenderId;
 
 	public static BlockClayDrawer clayDrawer;
+	public static BlockStainedClayDrawer stainedClayDrawer;
 	public static BlockPandorasChest PandorasChest;
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
@@ -73,6 +76,7 @@ public class PandorasChestMod {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		clayDrawer = new BlockClayDrawer();
+		stainedClayDrawer = new BlockStainedClayDrawer();
 		PandorasChest = new BlockPandorasChest();
 		fluorecentSpot = new BlockFluorecentSpot();
 		fluorecentTube = new BlockFluorecentTube();
@@ -82,6 +86,14 @@ public class PandorasChestMod {
 				"tileentity.claydrawer");
 		GameRegistry.addRecipe(new ItemStack(clayDrawer), "xxx", "x x", "xxx",
 				'x', new ItemStack(Blocks.hardened_clay));
+
+		GameRegistry.registerBlock(stainedClayDrawer, ItemCloth.class,
+				"Stained Clay Drawer");
+		for (int i = 0; i < 16; i++) {
+			ItemStack stack = new ItemStack(stainedClayDrawer, 1, i);
+			GameRegistry.addRecipe(stack, "xxx", "x x", "xxx", 'x',
+					new ItemStack(Blocks.stained_hardened_clay, 1, i));
+		}
 
 		GameRegistry.registerBlock(PandorasChest, "Pandora's Chest");
 		GameRegistry.registerTileEntity(TileEntityPandorasChest.class,

@@ -35,6 +35,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import com.hea3ven.pandoraschest.PandorasChestMod;
@@ -170,4 +171,6 @@ public abstract class BlockBaseChest extends BlockContainer {
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
+	
+	public abstract ResourceLocation getTexture(int meta);
 }
