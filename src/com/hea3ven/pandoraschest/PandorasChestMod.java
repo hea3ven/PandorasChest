@@ -21,6 +21,8 @@
 
 package com.hea3ven.pandoraschest;
 
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemCloth;
@@ -41,17 +43,21 @@ import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 import com.hea3ven.pandoraschest.tileentity.TileEntityPandorasChest;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent.Action;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent.MissingMapping;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "pandoraschest", version = "1.0a1", dependencies = "required-after:Forge@[10.12.0.1024,);required-after:colladamodel@[1.0a1,)")
+@Mod(modid = "pandoraschest", version = "1.0a2", dependencies = "required-after:Forge@[10.12.0.1047,);required-after:colladamodel@[1.0a1,)")
 public class PandorasChestMod {
 
 	@Instance("pandoraschest")
@@ -82,8 +88,8 @@ public class PandorasChestMod {
 		fluorecentTube = new BlockFluorecentTube();
 
 		GameRegistry.registerBlock(clayDrawer, "Clay Drawer");
-		GameRegistry.registerTileEntity(TileEntityClayDrawer.class,
-				"tileentity.claydrawer");
+		GameRegistry.registerTileEntityWithAlternatives(TileEntityClayDrawer.class,
+				"tileentity.claydrawer", "tileentity.decorativechest");
 		GameRegistry.addRecipe(new ItemStack(clayDrawer), "xxx", "x x", "xxx",
 				'x', new ItemStack(Blocks.hardened_clay));
 
@@ -140,6 +146,8 @@ public class PandorasChestMod {
 	@EventHandler
 	public void modInit(FMLInitializationEvent event) {
 
+//		MinecraftForge.EVENT_BUS.register(this);
+		FMLCommonHandler.instance().bus().register(this);
 		// MinecraftForge.EVENT_BUS.register(new PlayerHandler());
 		// MinecraftForge.EVENT_BUS.register(new
 		// GuiSpeed(Minecraft.getMinecraft()));
@@ -153,4 +161,12 @@ public class PandorasChestMod {
 	public void postInit(FMLPostInitializationEvent event) {
 	}
 
+	@EventHandler
+	public void missingMappings(FMLMissingMappingsEvent event){
+		List<MissingMapping> mappings = event.get();
+		for (MissingMapping missingMapping : mappings) {
+			if(missingMapping.name.equals("pandoraschest:Decorative Chest"))
+				missingMapping.setAction(Action.IGNORE);
+		}
+	}
 }
