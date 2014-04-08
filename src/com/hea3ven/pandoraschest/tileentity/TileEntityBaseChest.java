@@ -33,9 +33,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import com.hea3ven.pandoraschest.client.renderer.AnimationState;
+import com.hea3ven.colladamodel.client.model.AnimationState;
 
-public abstract class TileEntityBaseChest extends TileEntity implements IInventory {
+public abstract class TileEntityBaseChest extends TileEntity implements
+		IInventory {
 	protected ItemStack[] chestContents;
 
 	private String customName;
@@ -48,8 +49,8 @@ public abstract class TileEntityBaseChest extends TileEntity implements IInvento
 	protected ResourceLocation openAnimation;
 	protected ResourceLocation closeAnimation;
 
-	public TileEntityBaseChest(int slotsNum,
-			ResourceLocation openAnimation, ResourceLocation closeAnimation) {
+	public TileEntityBaseChest(int slotsNum, ResourceLocation openAnimation,
+			ResourceLocation closeAnimation) {
 		chestContents = new ItemStack[slotsNum];
 		numUsingPlayers = 0;
 		customName = null;
@@ -161,6 +162,7 @@ public abstract class TileEntityBaseChest extends TileEntity implements IInvento
 	}
 
 	protected abstract String getOpenSound();
+
 	protected abstract String getCloseSound();
 
 	@Override

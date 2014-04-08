@@ -25,18 +25,17 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.colladamodel.ModColladaModel;
 import com.hea3ven.pandoraschest.tileentity.TileEntityBaseChest;
 
 public class ModelBaseChest {
 	private ResourceLocation openResourceName;
-	
+
 	public ModelBaseChest(ResourceLocation resource) {
 		openResourceName = resource;
 	}
 
-	public void render(TileEntityBaseChest chest, double x, double y,
-			double z) {
+	public void render(TileEntityBaseChest chest, double x, double y, double z) {
 		GL11.glPushMatrix();
 
 		GL11.glTranslatef((float) x + 0.5f, (float) y + 0.5f, (float) z + 0.5f);
@@ -53,7 +52,8 @@ public class ModelBaseChest {
 		// GL11.glTranslatef(0.0f, -0.5f, 0.0f);
 		GL11.glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
 
-		PandorasChestMod.modelManager.getModel(openResourceName).renderAll();
+		ModColladaModel.getModelManager().getModel(openResourceName)
+				.renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();

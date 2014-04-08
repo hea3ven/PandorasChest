@@ -36,7 +36,6 @@ import com.hea3ven.pandoraschest.block.BlockFluorecentSpot;
 import com.hea3ven.pandoraschest.block.BlockFluorecentTube;
 import com.hea3ven.pandoraschest.block.BlockPandorasChest;
 import com.hea3ven.pandoraschest.block.BlockStainedClayDrawer;
-import com.hea3ven.pandoraschest.client.model.ModelManager;
 import com.hea3ven.pandoraschest.item.ItemFluorecentTube;
 import com.hea3ven.pandoraschest.tileentity.TileEntityClayDrawer;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentBlock;
@@ -77,8 +76,6 @@ public class PandorasChestMod {
 	public static BlockFluorecentSpot fluorecentSpot;
 	public static BlockFluorecentTube fluorecentTube;
 
-	public static ModelManager modelManager;
-
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		clayDrawer = new BlockClayDrawer();
@@ -88,8 +85,9 @@ public class PandorasChestMod {
 		fluorecentTube = new BlockFluorecentTube();
 
 		GameRegistry.registerBlock(clayDrawer, "Clay Drawer");
-		GameRegistry.registerTileEntityWithAlternatives(TileEntityClayDrawer.class,
-				"tileentity.claydrawer", "tileentity.decorativechest");
+		GameRegistry.registerTileEntityWithAlternatives(
+				TileEntityClayDrawer.class, "tileentity.claydrawer",
+				"tileentity.decorativechest");
 		GameRegistry.addRecipe(new ItemStack(clayDrawer), "xxx", "x x", "xxx",
 				'x', new ItemStack(Blocks.hardened_clay));
 
@@ -146,13 +144,8 @@ public class PandorasChestMod {
 	@EventHandler
 	public void modInit(FMLInitializationEvent event) {
 
-//		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-		// MinecraftForge.EVENT_BUS.register(new PlayerHandler());
-		// MinecraftForge.EVENT_BUS.register(new
-		// GuiSpeed(Minecraft.getMinecraft()));
 
-		// proxy.registerRenderers();
 		proxy.registerGuiHandlers(this);
 		proxy.registerRenderers();
 	}
@@ -162,10 +155,10 @@ public class PandorasChestMod {
 	}
 
 	@EventHandler
-	public void missingMappings(FMLMissingMappingsEvent event){
+	public void missingMappings(FMLMissingMappingsEvent event) {
 		List<MissingMapping> mappings = event.get();
 		for (MissingMapping missingMapping : mappings) {
-			if(missingMapping.name.equals("pandoraschest:Decorative Chest"))
+			if (missingMapping.name.equals("pandoraschest:Decorative Chest"))
 				missingMapping.setAction(Action.IGNORE);
 		}
 	}

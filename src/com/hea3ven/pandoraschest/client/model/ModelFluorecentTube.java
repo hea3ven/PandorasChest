@@ -25,7 +25,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.hea3ven.pandoraschest.PandorasChestMod;
+import com.hea3ven.colladamodel.ModColladaModel;
 import com.hea3ven.pandoraschest.tileentity.TileEntityFluorecentTubeBlock;
 
 public class ModelFluorecentTube {
@@ -68,7 +68,7 @@ public class ModelFluorecentTube {
 		// GL11.glTranslatef((float) 0.5f, (float) 0.0f, (float)0.5f);
 
 		// this.renderAnimation(chest.getAnimationFrame());
-		PandorasChestMod.modelManager.getModel(modelResource).renderAll();
+		ModColladaModel.getModelManager().getModel(modelResource).renderAll();
 
 		GL11.glPopMatrix();
 	}
@@ -78,7 +78,7 @@ public class ModelFluorecentTube {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glTranslatef(0.0f, -0.5f, 0.0f);
 
-		PandorasChestMod.modelManager.getModel(modelResource).renderAll();
+		ModColladaModel.getModelManager().getModel(modelResource).renderAll();
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
